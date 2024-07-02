@@ -5,7 +5,7 @@ import './data/use-cases/fake-authentication'
 import './data/use-cases/add-proposal'
 import './data/use-cases/delete-proposal'
 import './data/use-cases/get-all-proposals'
-import './data/use-cases/get-proposal-by-id'
+import './data/use-cases/get-proposal'
 
 if (require('electron-squirrel-startup')) {
   electron.app.quit();
