@@ -6,5 +6,10 @@ import { contextBridge, ipcRenderer } from "electron";
 import { AuthenticationParams } from "./data/use-cases/fake-authentication";
 
 contextBridge.exposeInMainWorld('database', {
-    login: (params: AuthenticationParams) => ipcRenderer.invoke('login', params)
+    login: (params: AuthenticationParams) => ipcRenderer.invoke('login', params),
+    addProposal: () => ipcRenderer.invoke('add-proposal'),
+    deleteProposal: () => ipcRenderer.invoke('delete-proposal'),
+    getAllProposal: () => ipcRenderer.invoke('get-all-proposal'),
+    getProposal: () => ipcRenderer.invoke('get-proposal'),
+    createTableProposal: () => ipcRenderer.invoke('create-table-proposal'),
 });
