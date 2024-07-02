@@ -1,0 +1,1 @@
+export const db = (window as any).database

@@ -15,10 +15,15 @@ export default defineConfig((env) => {
         formats: ['cjs'],
       },
       rollupOptions: {
-        external,
+        external: [
+          ...external,
+          'better-sqlite3'
+        ],
       },
     },
-    plugins: [pluginHotRestart('restart')],
+    plugins: [
+      pluginHotRestart('restart'),     
+    ],
     define,
     resolve: {
       // Load the Node.js entry.
