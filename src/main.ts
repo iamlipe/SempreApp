@@ -2,10 +2,11 @@ import electron from 'electron';
 import path from 'path';
 
 import './data/use-cases/fake-authentication'
-import './data/use-cases/add-proposal'
+import './data/use-cases/save-proposal'
 import './data/use-cases/delete-proposal'
-import './data/use-cases/get-all-proposals'
-import './data/use-cases/get-proposal'
+import './data/use-cases/fetch-all-proposals'
+import './data/use-cases/fetch-proposal'
+import './data/use-cases/create-table-proposal'
 
 if (require('electron-squirrel-startup')) {
   electron.app.quit();

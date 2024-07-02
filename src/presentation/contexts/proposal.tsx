@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react"
 
-export const fieldLabels: Record<keyof Proposal, string> = {
+export const fieldLabels: Record<keyof ProposalData, string> = {
     proposalNumber: 'Número da Proposta',
     customerReference: 'Referência do Cliente',
     company: 'Empresa',
@@ -20,7 +20,7 @@ export const fieldLabels: Record<keyof Proposal, string> = {
     featuresOfTheSecondBatteryBank: "Características do Segundo Banco de Baterias"
 }
 
-export interface Proposal {
+export interface ProposalData {
     proposalNumber: string;
     customerReference: string;
     company: string;
@@ -41,8 +41,8 @@ export interface Proposal {
 }
 
 interface ProposalProps {
-    data: Proposal
-    handleData: (values: Partial<Proposal>) => void;
+    data: ProposalData
+    handleData: (values: Partial<ProposalData>) => void;
 }
 
 const initialProposal = { 
@@ -53,13 +53,11 @@ const initialProposal = {
     requester: '',
     email: '',
     phone: '',
-
     invoicing: "",
     invoicingStatus: "",
     system: "",
     formPayment: "",
     notesPaymentCondition: "",
-
     deliveryTimeAndSchedule: "",
     shortTextItemFieldOne: "",
     featuresOfTheFirstBatteryBank: "",
@@ -70,9 +68,9 @@ const initialProposal = {
 export const ProposalContext = createContext<ProposalProps>(null)
 
 export function ProposalProvider({ children }: PropsWithChildren) {
-    const [data, setData] = useState<Proposal>(initialProposal)
+    const [data, setData] = useState<ProposalData>(initialProposal)
 
-    function handleData(values: Partial<Proposal>) {
+    function handleData(values: Partial<ProposalData>) {
         setData({ ...data, ...values })
     }
 

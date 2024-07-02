@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Proposal, fieldLabels, useProposal } from "../../contexts/proposal";
+import { ProposalData, fieldLabels, useProposal } from "../../contexts/proposal";
 import { useEffect, useState } from "react";
 import { Input } from "../../shared/input";
 import { Button } from "../../shared/button";
@@ -14,7 +14,7 @@ export function ProposalPersonData() {
     const [requester, setRequester] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
-    const [errors, setErrors] = useState<Partial<Record<keyof Proposal, string>>>({})
+    const [errors, setErrors] = useState<Partial<Record<keyof ProposalData, string>>>({})
     const [canGo, setCanGo] = useState(false)
 
     const { data, handleData } = useProposal()
@@ -23,8 +23,6 @@ export function ProposalPersonData() {
         handleData({ proposalNumber, customerReference, company, cnpj, requester, email, phone })
         setCanGo(true)
     }
-
-    console.log(data)
 
     useEffect(() => {
         setProposalNumber(data.proposalNumber)
@@ -38,8 +36,8 @@ export function ProposalPersonData() {
 
     useEffect(() => {
         if(canGo) {
-            const fields: (keyof Proposal)[] = ['proposalNumber', 'customerReference', 'company', 'cnpj', 'requester', 'email', 'phone'];
-            const errorsResponse: Partial<Record<keyof Proposal, string>> = {};
+            const fields: (keyof ProposalData)[] = ['proposalNumber', 'customerReference', 'company', 'cnpj', 'requester', 'email', 'phone'];
+            const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
         
             const allFieldsFilled = fields.every(field => {
                 const isFilled = data[field] && data[field] !== '';
@@ -53,6 +51,7 @@ export function ProposalPersonData() {
         
             if (allFieldsFilled) {
                 navigate('/proposal/payment');
+                setCanGo(false)
             } else {
                 setErrors(errorsResponse);
                 setCanGo(false);

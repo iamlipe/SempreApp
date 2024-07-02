@@ -10,7 +10,7 @@ const buttonVarients = cva(
       variant: {
         default: 'bg-orange-500 text-white hover:bg-orange-400',
         outline: 'bg-transparent border border-orange-500 text-orange-500 hover:text-orange-400 hover:border-orange-400',
-        ghost: 'bg-transparent text-orange-900 hover:text-orange-400 underline'
+        ghost: 'bg-transparent text-orange-500 hover:text-orange-400 underline'
       },
     },
     defaultVariants: {
