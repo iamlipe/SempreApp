@@ -17,7 +17,10 @@ const MyDoc = () => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
-                <Text>Testing</Text>
+                <Text>PRIMEIR PDF</Text>
+                <Text>PRIMEIR PDF</Text>
+                <Text>PRIMEIR PDF</Text>
+                <Text>PRIMEIR PDF</Text>
             </View>
         </Page>
     </Document>
@@ -31,5 +34,10 @@ export const MyDocument = () => {
         saveAs(blob, fileName);
     };
 
-    return <button onClick={downloadPdf}>Download PDF</button>;
+    return (
+        <div className='flex flex-col'>
+            <MyDoc />
+            <button onClick={downloadPdf}>Download PDF</button>
+        </div>
+    );
 }

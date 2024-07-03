@@ -17,7 +17,8 @@ export const fieldLabels: Record<keyof ProposalData, string> = {
     shortTextItemFieldOne: "Texto Abreviado Campo do Item 1",
     featuresOfTheFirstBatteryBank: "Características do Primeiro Banco de Baterias",
     shortTextItemFieldTwo: "Texto Abreviado Campo do Item 2",
-    featuresOfTheSecondBatteryBank: "Características do Segundo Banco de Baterias"
+    featuresOfTheSecondBatteryBank: "Características do Segundo Banco de Baterias",
+    createdAt: "Criado Quando"
 }
 
 export interface ProposalData {
@@ -38,11 +39,14 @@ export interface ProposalData {
     featuresOfTheFirstBatteryBank: string;
     shortTextItemFieldTwo: string;
     featuresOfTheSecondBatteryBank: string;
+    createdAt: string;
 }
 
 interface ProposalProps {
+    id?: number
     data: ProposalData
     handleData: (values: Partial<ProposalData>) => void;
+    handleId: (value: number) => void
 }
 
 const initialProposal = { 
@@ -62,20 +66,26 @@ const initialProposal = {
     shortTextItemFieldOne: "",
     featuresOfTheFirstBatteryBank: "",
     shortTextItemFieldTwo: "",
-    featuresOfTheSecondBatteryBank: ""
+    featuresOfTheSecondBatteryBank: "",
+    createdAt: ""
 }
 
 export const ProposalContext = createContext<ProposalProps>(null)
 
 export function ProposalProvider({ children }: PropsWithChildren) {
+    const [id, setId] = useState<number | null | undefined>(undefined)
     const [data, setData] = useState<ProposalData>(initialProposal)
 
     function handleData(values: Partial<ProposalData>) {
         setData({ ...data, ...values })
     }
 
+    function handleId(value: number) {
+        setId(value)
+    }
+
     return (
-        <ProposalContext.Provider value={{ data, handleData }} >
+        <ProposalContext.Provider value={{ id, data, handleData, handleId }} >
             {children}
         </ProposalContext.Provider>
     )

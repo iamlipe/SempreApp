@@ -1,5 +1,5 @@
 import { createHashRouter } from "react-router-dom";
-import { MyDocument } from "./screens/document";
+import { MyDocument } from "./screens/documents/proposal-pdf";
 import { Home } from "./screens/home";
 import { Login } from "./screens/login";
 import { ProposalPersonData } from "./screens/proposal/personal-person-data";

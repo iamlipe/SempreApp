@@ -16,7 +16,7 @@ export function ProposalSpecifications() {
     const [errors, setErrors] = useState<Partial<Record<keyof ProposalData, string>>>({})
     const [canGo, setCanGo] = useState(false)
     
-    const { data, handleData } = useProposal()
+    const { id, data, handleData } = useProposal()
     
     const handleSpecifications = () => {
         handleData({ deliveryTimeAndSchedule, shortTextItemFieldOne, featuresOfTheFirstBatteryBank, shortTextItemFieldTwo, featuresOfTheSecondBatteryBank })
@@ -35,12 +35,29 @@ export function ProposalSpecifications() {
         } catch (error) {
             alert(error)
         }
-
-
-        
-        console.log()
-
     }
+    
+    const handleUpdateProposal = async () => {
+        try {
+            const resp = await db.updateProposal({...data, id})
+        
+            if (!resp.success) {
+                alert(resp.message)
+            } else {
+                navigate('/home')
+            }
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    useEffect(() => {
+        setDeliveryTimeAndSchedule(data.deliveryTimeAndSchedule)
+        setShortTextItemFieldOne(data.shortTextItemFieldOne)
+        setFeaturesOfTheFirstBatteryBank(data.featuresOfTheFirstBatteryBank)
+        setShortTextItemFieldTwo(data.shortTextItemFieldTwo)
+        setFeaturesOfTheSecondBatteryBank(data.featuresOfTheSecondBatteryBank)
+    }, [])
 
     useEffect(() => {
         if(canGo) {
@@ -58,7 +75,12 @@ export function ProposalSpecifications() {
             });
         
             if (allFieldsFilled) {
-                handleSaveProposal()
+                if (id) {
+                    handleUpdateProposal()
+                } else {
+                    handleSaveProposal()
+                }
+                
                 setCanGo(false)
             } else {
                 setErrors(errorsResponse);

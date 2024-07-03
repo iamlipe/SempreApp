@@ -14,7 +14,7 @@ export function Home() {
     const handleFetchAllProposal = async () => {
         try {
             const resp = await db.fetchAllProposal()
-            setProposals(resp)
+            setProposals(resp.sort((a: Proposal, b: Proposal) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
         } catch (error) {
             alert(error)   
         }
@@ -27,7 +27,7 @@ export function Home() {
     return (
         <div className="flex flex-col py-12 px-8">
             <div className="flex justify-between items-center">
-                <img src={'../../../public/logo.png'} alt="logo" width={180} height={60} />
+                <img src={'../../../public/assets/logo.png'} alt="logo" width={180} height={60} />
                 <Button variant="ghost" onClick={() => navigate('/')}>
                     <LogOut className="mr-3" />
                     Sair
@@ -40,30 +40,30 @@ export function Home() {
                     <h2 className="text-sm font-semibold text-slate-600" >Veja todas as propostas em andamento e as próximas etapas de cada uma abaixo.</h2>
                 </div>
 
-                <Button onClick={() => navigate('/proposal/person-data')}><Plus className="mr-4"/>Cadastrar Proposta</Button>
+                <Button onClick={() => navigate('/proposal')}><Plus className="mr-4"/>Cadastrar Proposta</Button>
             </div>
 
             <div>
                 {proposals.map((p) => (
                         <ItemList 
                             key={p.id}
-                            title={p.proposalNumber} 
+                            title={`${p.proposalNumber} - ${p.customerReference}`} 
                             description={p.createdAt} 
                             options={[
                                 {
-                                    text: 'Editar Técnico',
+                                    text: 'Editar Custo',
                                     icon: <Wrench size={20} />,
-                                    onPress: () => console.log('Editar Técnico')
+                                    onPress: () => console.log('Editar Custo')
                                 },
                                 {
-                                    text: 'Editar Comercial',
+                                    text: 'Editar Proposta',
                                     icon: <FolderPen size={20} />,
-                                    onPress: () => console.log('Editar Comercial')
+                                    onPress: () => navigate(`/proposal?id=${p.id}`)
                                 },
                                 {
-                                    text: 'Gerar Proposta PDF',
+                                    text: 'Visualizar PDF',
                                     icon: <FileText size={20} />,
-                                    onPress: () => console.log('Gerar Proposta PDF')
+                                    onPress: () => console.log('Visualizar PDF')
                                 },
                                 {
                                     text: 'Excluir',

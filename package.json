@@ -57,5 +57,11 @@
     "react-router-dom": "^6.24.0",
     "sqlite3": "^5.1.7",
     "tailwind-merge": "^2.3.0"
-  }
+  },
+  "extraResources": [
+      {
+        "from": "./public/assets",
+        "to": "assets"
+      }
+] 
 }

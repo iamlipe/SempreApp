@@ -23,10 +23,10 @@ export function ItemList({ description, title, options }: ItemListProps) {
                         <GripHorizontal />
 
                         {open ?   
-                                <div className="absolute right-8 flex flex-col items-start bg-white border rounded-md border-slate-200 p-4 space-y-3">
+                                <div className="absolute right-12 flex flex-col items-start bg-white border rounded-md border-slate-200 p-2 space-y-1">
                                     {options.map((o) => (
-                                        <div key={o.text} className="flex w-full space-x-3 hover:text-orange-500" onClick={o.onPress}>
-                                            <p className="flex flex-1 w-full text-sm font-medium text-slate-800 hover:text-orange-500" >{o.text}</p>
+                                        <div key={o.text} className="flex w-full space-x-3 hover:bg-slate-200 p-2 rounded" onClick={o.onPress}>
+                                            <p className="flex flex-1 w-full text-sm font-medium text-slate-800" >{o.text}</p>
                                             <div className="self-end">
                                                 {o.icon}
                                             </div>

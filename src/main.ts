@@ -7,6 +7,7 @@ import './data/use-cases/delete-proposal'
 import './data/use-cases/fetch-all-proposals'
 import './data/use-cases/fetch-proposal'
 import './data/use-cases/create-table-proposal'
+import './data/use-cases/update-proposal'
 
 if (require('electron-squirrel-startup')) {
   electron.app.quit();
