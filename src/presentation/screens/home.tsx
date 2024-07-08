@@ -53,7 +53,7 @@ export function Home() {
                                 {
                                     text: 'Editar Custo',
                                     icon: <Wrench size={20} />,
-                                    onPress: () => console.log('Editar Custo')
+                                    onPress: () => navigate(`/cost?id=${p.id}`)
                                 },
                                 {
                                     text: 'Editar Proposta',
@@ -63,7 +63,7 @@ export function Home() {
                                 {
                                     text: 'Visualizar PDF',
                                     icon: <FileText size={20} />,
-                                    onPress: () => console.log('Visualizar PDF')
+                                    onPress: () => navigate('/document')
                                 },
                                 {
                                     text: 'Excluir',

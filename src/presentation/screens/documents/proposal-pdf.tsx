@@ -17,7 +17,7 @@ const MyDoc = () => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
-                <Text>PRIMEIR PDF</Text>
+                <Text>TESTING</Text>
                 <Text>PRIMEIR PDF</Text>
                 <Text>PRIMEIR PDF</Text>
                 <Text>PRIMEIR PDF</Text>

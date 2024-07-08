@@ -14,6 +14,7 @@ export function ProposalPersonData() {
     const [requester, setRequester] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    
     const [errors, setErrors] = useState<Partial<Record<keyof ProposalData, string>>>({})
     const [canGo, setCanGo] = useState(false)
 

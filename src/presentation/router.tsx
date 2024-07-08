@@ -7,20 +7,19 @@ import { ProposalPayment } from "./screens/proposal/proposal-payment";
 import { ProposalRoot } from "./screens/proposal/proposal-root";
 import { ProposalSpecifications } from "./screens/proposal/personal-specifications";
 import { CostRoot } from "./screens/cost/cost-root";
-import { CostAccessoriesAndOptions } from "./screens/cost/cost-accessories-and-options";
-import { CostAlernatingCurrentInputCharacteristics } from "./screens/cost/cost-alternating-current-input-characteristics";
-import { CostBasicCharacteristics } from "./screens/cost/cost-basic-characteristics";
-import { CostBatteryProtection } from "./screens/cost/cost-battery-protection";
-import { CostConstructiveCharacteristics } from "./screens/cost/cost-constructive-characteristics";
-import { CostConsumerCharacteristics } from "./screens/cost/cost-consumer-characteristics";
-import { CostConsumerProtection } from "./screens/cost/cost-consumer-protection";
-import { CostDistortionAndTrigger } from "./screens/cost/cost-distortion-and-trigger";
-import { CostFrontPanelManualControl } from "./screens/cost/cost-front-panel-manual-control";
-import { CostGeneralAlernatingCurrentInputProtection } from "./screens/cost/cost-general-alternating-current-input-protection";
-import { CostOtherProtection } from "./screens/cost/cost-other-protections";
-import { CostVoltmeterAndTransducers } from "./screens/cost/cost-voltmeter-and-transducers";
-import { CostWiringBusbarAndIdentification } from "./screens/cost/cost-wiring-busbar-and-identification";
-import { CostBatteryBankCharacteristics } from "./screens/cost/cost-battery-bank-characteristics";
+import { CostFirst } from "./screens/cost/cost-first";
+import { CostThird } from "./screens/cost/cost-third";
+import { CostFourth } from "./screens/cost/cost-fourth";
+import { CostSixth } from "./screens/cost/cost-sixth";
+import { CostSeventh } from "./screens/cost/cost-seventh";
+import { CostEight } from "./screens/cost/cost-eighth";
+import { CostNinth } from "./screens/cost/cost-ninth";
+import { CostSecond } from "./screens/cost/cost-second";
+import { CostTenth } from "./screens/cost/cost-tenth";
+import { CostEleventh } from "./screens/cost/cost-eleventh";
+import { CostTwelfth } from "./screens/cost/cost-twelfth";
+import { CostThirteenth } from "./screens/cost/cost-thirteenth";
+import { CostFifth } from "./screens/cost/cost-fifth";
 
 export const router = createHashRouter([
     {
@@ -56,64 +55,60 @@ export const router = createHashRouter([
     },
 
     {
-        path: "/cost/:id",
+        path: "/cost",
         element: <CostRoot />,
         children: [
             {
-                path: 'cost-accessories-and-options',
-                element: <CostAccessoriesAndOptions />
+                path: 'first',
+                element: <CostFirst />
             },
             {
-                path: 'cost-alternating-current-input-characteristics',
-                element: <CostAlernatingCurrentInputCharacteristics />
+                path: 'second',
+                element: <CostSecond />
             },
             {
-                path: 'cost-basic-characteristics',
-                element: <CostBasicCharacteristics />
+                path: 'third',
+                element: <CostThird />
             },
             {
-                path: 'cost-battery-protection',
-                element: <CostBatteryProtection />
+                path: 'fourth',
+                element: <CostFourth />
             },
             {
-                path: 'cost-constructive-characteristics',
-                element: <CostConstructiveCharacteristics />
+                path: 'fifth',
+                element: <CostFifth />
             },
             {
-                path: 'cost-consumer-characteristics',
-                element: <CostConsumerCharacteristics />
+                path: 'sixth',
+                element: <CostSixth />
             },
             {
-                path: 'cost-consumer-protection',
-                element: <CostConsumerProtection />
+                path: 'seventh',
+                element: <CostSeventh />
             },
             {
-                path: 'cost-distortion-and-trigger',
-                element: <CostDistortionAndTrigger />
+                path: 'eighth',
+                element: <CostEight />
             },
             {
-                path: 'cost-front-panel-manual-control',
-                element: <CostFrontPanelManualControl />
+                path: 'ninth',
+                element: <CostNinth />
             },
             {
-                path: 'cost-general-alternating-current-input-protection',
-                element: <CostGeneralAlernatingCurrentInputProtection />
+                path: 'tenth',
+                element: <CostTenth />
             },
             {
-                path: 'cost-other-protections',
-                element: <CostOtherProtection />
+                path: 'eleventh',
+                element: <CostEleventh />
             },
             {
-                path: 'cost-voltmeter-and-transducers',
-                element: <CostVoltmeterAndTransducers />
+                path: 'twelfth',
+                element: <CostTwelfth />
             },
             {
-                path: 'cost-wiring-busbar-and-identification',
-                element: <CostWiringBusbarAndIdentification />
-            },
-            {
-                path: 'cost-battery-bank-characteristics',
-                element: <CostBatteryBankCharacteristics />
+                path: 'thirteenth',
+                element: <CostThirteenth />
             },
         ]
     },
