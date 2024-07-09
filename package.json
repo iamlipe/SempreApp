@@ -1,6 +1,6 @@
 {
-  "name": "sempre-desktop-app",
-  "productName": "sempre-desktop-app",
+  "name": "sempre",
+  "productName": "sempre",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
