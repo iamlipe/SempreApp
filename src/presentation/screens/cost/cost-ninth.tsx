@@ -19,7 +19,13 @@ export function CostNinth() {
     const { data, handleData } = useProposal()
 
     const onSubmit = async () => {
-        handleData({ maoDeObraEngenharia, maoDeObraMecanica, maoDeObraEletrica, maoDeObraOperacional, maoDeObraAdministracao })
+        handleData({ 
+            mao_de_obra_engenharia: maoDeObraEngenharia, 
+            mao_de_obra_mecanica: maoDeObraMecanica, 
+            mao_de_obra_eletrica: maoDeObraEletrica, 
+            mao_de_obra_operacional: maoDeObraOperacional, 
+            mao_de_obra_administracao: maoDeObraAdministracao 
+        })
         setCanGo(true)
     }
 
@@ -33,7 +39,13 @@ export function CostNinth() {
 
     useEffect(() => {
         if(canGo) {
-            const fields: (keyof ProposalData)[] = ['maoDeObraEngenharia', 'maoDeObraMecanica', 'maoDeObraEletrica', 'maoDeObraOperacional', 'maoDeObraAdministracao'];
+            const fields: (keyof ProposalData)[] = [
+                'mao_de_obra_engenharia', 
+                'mao_de_obra_mecanica', 
+                'mao_de_obra_eletrica', 
+                'mao_de_obra_operacional', 
+                'mao_de_obra_administracao'
+            ];
             const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
         
             const allFieldsFilled = fields.every(field => {
@@ -61,12 +73,11 @@ export function CostNinth() {
     return (
         <div className="flex flex-col space-y-2">
             <p className="font-semibold text-slate-800 text-sm mb-4">15 - Mão de Obra</p>
-            <Input label="M. O. -  Engenharia (média)" error={errors.maoDeObraMecanica} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraEngenharia} />
-            <Input label="M. O. -  Mecânica (média)" error={errors.maoDeObraMecanica} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraMecanica} />
-            <Input label="M. O. -  Elétrica (média)" error={errors.maoDeObraEletrica} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraEletrica} />
-            <Input label="M. O. -  Operacional (média)" error={errors.maoDeObraOperacional} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraOperacional} />
-            <Input label="M. O. -  Administração (média)" error={errors.maoDeObraAdministracao} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraAdministracao} />
-
+            <Input label="M. O. -  Engenharia (média)" error={errors.mao_de_obra_engenharia} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraEngenharia} />
+            <Input label="M. O. -  Mecânica (média)" error={errors.mao_de_obra_mecanica} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraMecanica} />
+            <Input label="M. O. -  Elétrica (média)" error={errors.mao_de_obra_eletrica} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraEletrica} />
+            <Input label="M. O. -  Operacional (média)" error={errors.mao_de_obra_operacional} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraOperacional} />
+            <Input label="M. O. -  Administração (média)" error={errors.mao_de_obra_administracao} disabled placeholder="Digite aqui" type="text" defaultValue={maoDeObraAdministracao} />
 
             <div className="flex flex-col">
                 <Button className="mt-10" variant="default" type="button" onClick={onSubmit}>Próximo</Button>

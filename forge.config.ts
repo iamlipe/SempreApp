@@ -7,13 +7,19 @@ import { MakerRpm } from '@electron-forge/maker-rpm';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
+import path from 'path';
 
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    icon: path.join(__dirname, 'src/icon') // Certifique-se de que o caminho e a extensão estão corretos
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [   
+     new MakerSquirrel({}), 
+      new MakerZIP({}, ['darwin', 'mas', 'win32', 'linux']), 
+      new MakerRpm({}), 
+      new MakerDeb({})],
   plugins: [
     new VitePlugin({
       // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.

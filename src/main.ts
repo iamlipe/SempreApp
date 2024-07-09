@@ -19,8 +19,11 @@ const createWindow = () => {
   mainWindow = new electron.BrowserWindow({
     width: 1024,
     height: 728,
+    icon: process.platform === 'win32' ? path.join(__dirname, 'icon.ico') :
+           process.platform === 'darwin' ? path.join(__dirname, 'icon.icns') :
+           path.join(__dirname, 'icon.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+    preload: path.join(__dirname, 'preload.js'),
     },
   });
 

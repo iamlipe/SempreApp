@@ -28,27 +28,52 @@ export function CostEleventh() {
     const { data, handleData } = useProposal()
 
     const onSubmit = async () => {
-        handleData({ startUp, startUpEstado, startUpValor, frete, freteEstado, freteValor, comissaoMargemDeVenda, comissaoVendedor, treinamento, treinamentoEstado, treinamentoValor })
+        handleData({ 
+            start_up: startUp, 
+            start_up_estado: startUpEstado, 
+            start_up_valor: startUpValor, 
+            frete, 
+            frete_estado: freteEstado, 
+            frete_valor: freteValor, 
+            comissao_margem_de_venda: comissaoMargemDeVenda, 
+            comissao_vendedor: comissaoVendedor, 
+            treinamento, 
+            treinamento_estado: treinamentoEstado, 
+            treinamento_valor: treinamentoValor 
+        })
+
         setCanGo(true)
     }
 
     useEffect(() => {
-        setaStartUp(data.startUp)
-        setStartUpEstado(data.startUpEstado)
-        setStartUpValor(data.startUpValor)
+        setaStartUp(data.start_up)
+        setStartUpEstado(data.start_up_estado)
+        setStartUpValor(data.start_up_valor)
         setFrete(data.frete)
-        setFreteEstado(data.freteEstado)
-        setFreteValor(data.freteValor)
-        setComissaoMargemDeVenda(data.comissaoMargemDeVenda)
-        setComissaoVendedor(data.comissaoVendedor)
+        setFreteEstado(data.frete_estado)
+        setFreteValor(data.frete_valor)
+        setComissaoMargemDeVenda(data.comissao_margem_de_venda)
+        setComissaoVendedor(data.comissao_vendedor)
         setTreinamento(data.treinamento)
-        setTreinamentoEstado(data.treinamentoEstado)
-        setTreinamentoValor(data.treinamentoValor)
+        setTreinamentoEstado(data.treinamento_estado)
+        setTreinamentoValor(data.treinamento_valor)
     }, [])
 
     useEffect(() => {
         if (canGo) {
-            const fields: (keyof ProposalData)[] = ['startUp', 'startUpEstado', 'startUpValor', 'frete', 'freteEstado', 'freteValor', 'treinamento', 'treinamentoEstado', 'treinamentoValor',  'comissaoMargemDeVenda', 'comissaoVendedor'];
+            const fields: (keyof ProposalData)[] = [
+                'start_up', 
+                'start_up_estado', 
+                'start_up_valor', 
+                'frete', 
+                'frete_estado', 
+                'frete_valor', 
+                'treinamento', 
+                'treinamento_estado', 
+                'treinamento_valor',  
+                'comissao_margem_de_venda', 
+                'comissao_vendedor'
+            ];
             const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
 
             const allFieldsFilled = fields.every(field => {
@@ -83,12 +108,12 @@ export function CostEleventh() {
                 ]}
                 value={startUp}
                 onChange={(e) => setaStartUp(e)}
-                error={errors.startUp}
+                error={errors.start_up}
             />
 
             <div className="flex">
                 <div className="flex-1 mr-1">
-                    <Select label="Estado" error={errors.startUpEstado} onChange={(e) => setStartUpEstado(e.target.value)} value={startUpEstado}>
+                    <Select label="Estado" error={errors.start_up_estado} onChange={(e) => setStartUpEstado(e.target.value)} value={startUpEstado}>
                         <option value="">Selecione...</option>
                         <option value="AC" selected={startUpEstado === "AC"}>Acre</option>
                         <option value="AL" selected={startUpEstado === "AL"}>Alagoas</option>
@@ -120,7 +145,7 @@ export function CostEleventh() {
                     </Select>
                 </div>
                 <div className="flex-1 ml-1">
-                    <Input label="Valor (R$)" error={errors.startUpValor} placeholder="Digite..." type="text" onChange={(e) => setStartUpValor(e.target.value)} value={startUpValor} />
+                    <Input label="Valor (R$)" error={errors.start_up_valor} placeholder="Digite..." type="text" onChange={(e) => setStartUpValor(e.target.value)} value={startUpValor} />
                 </div>
             </div>
 
@@ -137,7 +162,7 @@ export function CostEleventh() {
 
             <div className="flex">
                 <div className="flex-1 mr-1">
-                    <Select label="Estado" error={errors.freteEstado} onChange={(e) => setFreteEstado(e.target.value)} value={freteEstado}>
+                    <Select label="Estado" error={errors.frete_estado} onChange={(e) => setFreteEstado(e.target.value)} value={freteEstado}>
                         <option value="">Selecione...</option>
                         <option value="AC" selected={freteEstado === "AC"}>Acre</option>
                         <option value="AL" selected={freteEstado === "AL"}>Alagoas</option>
@@ -169,7 +194,7 @@ export function CostEleventh() {
                     </Select>
                 </div>
                 <div className="flex-1 ml-1">
-                    <Input label="Valor (R$)" error={errors.freteValor} placeholder="Digite..." type="text" onChange={(e) => setFreteValor(e.target.value)} value={freteValor} />
+                    <Input label="Valor (R$)" error={errors.frete_valor} placeholder="Digite..." type="text" onChange={(e) => setFreteValor(e.target.value)} value={freteValor} />
                 </div>
             </div>
 
@@ -187,7 +212,7 @@ export function CostEleventh() {
 
             <div className="flex">
                 <div className="flex-1 mr-1">
-                    <Select label="Estado" error={errors.treinamentoEstado} onChange={(e) => setTreinamentoEstado(e.target.value)} value={treinamentoEstado}>
+                    <Select label="Estado" error={errors.treinamento_estado} onChange={(e) => setTreinamentoEstado(e.target.value)} value={treinamentoEstado}>
                         <option value="">Selecione...</option>
                         <option value="AC" selected={treinamentoEstado === "AC"}>Acre</option>
                         <option value="AL" selected={treinamentoEstado === "AL"}>Alagoas</option>
@@ -219,7 +244,7 @@ export function CostEleventh() {
                     </Select>
                 </div>
                 <div className="flex-1 ml-1">
-                    <Input label="Valor (R$)" error={errors.treinamentoValor} placeholder="Digite..." type="text" onChange={(e) => setTreinamentoValor(e.target.value)} value={treinamentoValor} />
+                    <Input label="Valor (R$)" error={errors.treinamento_valor} placeholder="Digite..." type="text" onChange={(e) => setTreinamentoValor(e.target.value)} value={treinamentoValor} />
                 </div>
             </div>
 
@@ -229,10 +254,10 @@ export function CostEleventh() {
 
             <div className="flex">
                 <div className="flex-1 mr-1">
-                    <Input label="Margem de venda (%)" error={errors.comissaoMargemDeVenda} placeholder="Digite..." type="text" onChange={(e) => setComissaoMargemDeVenda(e.target.value)} value={comissaoMargemDeVenda} />
+                    <Input label="Margem de venda (%)" error={errors.comissao_margem_de_venda} placeholder="Digite..." type="text" onChange={(e) => setComissaoMargemDeVenda(e.target.value)} value={comissaoMargemDeVenda} />
                 </div>
                 <div className="flex-1 ml-1">
-                    <Input label="Vendedor (%)" error={errors.comissaoVendedor} placeholder="Digite..." type="text" onChange={(e) => setComissaoVendedor(e.target.value)} value={comissaoVendedor} />
+                    <Input label="Vendedor (%)" error={errors.comissao_vendedor} placeholder="Digite..." type="text" onChange={(e) => setComissaoVendedor(e.target.value)} value={comissaoVendedor} />
                 </div>
             </div>
 

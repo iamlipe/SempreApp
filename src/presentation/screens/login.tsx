@@ -27,7 +27,7 @@ export function Login() {
     return (
         <div className="flex flex-col md:flex-row h-screen w-screen justify-center items-center p-10 space-x-10">
             <div className="flex-1 flex justify-center items-center p-10">
-                <img src="../../../public/assets/logo.png" alt="logo" width={300} height={140} />
+                <img src="https://i.ibb.co/qnwRbPD/logo.png" alt="logo" width={300} height={140} />
             </div>
             <div className="flex-1 flex flex-col p-10 border rounded-xl">
                 <div className="mb-4 space-y-2">

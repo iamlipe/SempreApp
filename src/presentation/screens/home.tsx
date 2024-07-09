@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ItemList } from "../shared/item-list";
 import { Proposal } from "../../data/models/proposal";
 import { Button } from "../shared/button";
-import { FileText, FolderPen, LogOut, Plus, Trash, Wrench } from "lucide-react";
+import { FileText, FolderPen, LogOut, Plus, Trash2, Wrench } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export function Home() {
@@ -14,7 +14,16 @@ export function Home() {
     const handleFetchAllProposal = async () => {
         try {
             const resp = await db.fetchAllProposal()
-            setProposals(resp.sort((a: Proposal, b: Proposal) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
+            setProposals(resp.sort((a: Proposal, b: Proposal) => new Date(b.criado_em).getTime() - new Date(a.criado_em).getTime()));
+        } catch (error) {
+            alert(error)   
+        }
+    }
+
+    const handleDeleteProposal = async (id: string) => {
+        try {
+            await db.deleteProposal(id)
+            await handleFetchAllProposal()
         } catch (error) {
             alert(error)   
         }
@@ -27,7 +36,7 @@ export function Home() {
     return (
         <div className="flex flex-col py-12 px-8">
             <div className="flex justify-between items-center">
-                <img src={'../../../public/assets/logo.png'} alt="logo" width={180} height={60} />
+                <img src='https://i.ibb.co/qnwRbPD/logo.png' alt="logo" width={180} height={60} />
                 <Button variant="ghost" onClick={() => navigate('/')}>
                     <LogOut className="mr-3" />
                     Sair
@@ -47,8 +56,8 @@ export function Home() {
                 {proposals.map((p) => (
                         <ItemList 
                             key={p.id}
-                            title={`${p.proposalNumber} - ${p.customerReference}`} 
-                            description={p.createdAt} 
+                            title={`${p.numero_da_proposta} - ${p.referencia_do_cliente}`} 
+                            description={p.criado_em} 
                             options={[
                                 {
                                     text: 'Editar Custo',
@@ -63,24 +72,18 @@ export function Home() {
                                 {
                                     text: 'Visualizar PDF',
                                     icon: <FileText size={20} />,
-                                    onPress: () => navigate('/document')
+                                    onPress: () => navigate(`/document?id=${p.id}`)
                                 },
                                 {
                                     text: 'Excluir',
-                                    icon: <Trash size={20} />,
-                                    onPress: () => console.log('Excluir')
+                                    icon: <Trash2 size={20} />,
+                                    onPress: () => handleDeleteProposal(p.id)
                                 }
                             ]}
                         />
                     ) 
                 )}
             </div>
-
-
-
-            {/* <Link to={'/cost/1/cost-basic-characteristics'} >Edit Cost Proposal</Link> */}
-            {/* <Link to={'/'} >Go To Login</Link>
-            <Link to={'/document'} >Go To Document</Link> */}
         </div>
     )
 }

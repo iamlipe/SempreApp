@@ -9,19 +9,12 @@ export function CostSeventh() {
     const navigate = useNavigate()
 
     const [tipoDeInstrumento, setTipoDeInstrumento] = useState('')
-    const [instDeMedicaoVoltimetroCorrenteContinua, setInstDeMedicaoVoltimetroCorrenteContinua] = useState('')
-    const [instDeMedicaoVoltimetroCorrenteAlternada, setInstDeMedicaoVoltimetroCorrenteAlternada] = useState('')
-    const [instDeMedicaoAmperimetroCorrenteContinua, setInstDeMedicaoAmperimetroCorrenteContinua] = useState('')
-    const [instDeMedicaoAmperimetroCorrenteAlternada, setInstDeMedicaoAmperimetroCorrenteAlternada] = useState('')
+    const [instrumentoDeMedicaoVoltimetroCorrenteContinua, setInstrumentoDeMedicaoVoltimetroCorrenteContinua] = useState('')
+    const [instrumentoDeMedicaoVoltimetroCorrenteAlternada, setInstrumentoDeMedicaoVoltimetroCorrenteAlternada] = useState('')
+    const [instrumentoDeMedicaoAmperimetroCorrenteContinua, setInstrumentoDeMedicaoAmperimetroCorrenteContinua] = useState('')
+    const [instrumentoDeMedicaoAmperimetroCorrenteAlternada, setInstrumentoDeMedicaoAmperimetroCorrenteAlternada] = useState('')
     const [transdutorQuatroAVinteMATensao, setTransdutorQuatroAVinteMATensao] = useState('')
     const [transdutorQuatroAVinteMACorrente, setTransdutorQuatroAVinteMACorrente] = useState('')
-
-    const [openInputInstDeMedicaoVoltimetroCorrenteContinua, setOpenInputInstDeMedicaoVoltimetroCorrenteContinua] = useState(false)
-    const [openInputInstDeMedicaoVoltimetroCorrenteAlternada, setOpenInputInstDeMedicaoVoltimetroCorrenteAlternada] = useState(false)
-    const [openInputInstDeMedicaoAmperimetroCorrenteContinua, setOpenInputInstDeMedicaoAmperimetroCorrenteContinua] = useState(false)
-    const [openInputInstDeMedicaoAmperimetroCorrenteAlternada, setOpenInputInstDeMedicaoAmperimetroCorrenteAlternada] = useState(false)
-    const [openInputTransdutorQuatroAVinteMATensao, setOpenInputTransdutorQuatroAVinteMATensao] = useState(false)
-    const [openInputTransdutorQuatroAVinteMACorrente, setOpenInputTransdutorQuatroAVinteMACorrente] = useState(false)
 
     const [errors, setErrors] = useState<Partial<Record<keyof ProposalData, string>>>({})
     const [canGo, setCanGo] = useState(false)
@@ -29,23 +22,39 @@ export function CostSeventh() {
     const { data, handleData } = useProposal()
 
     const onSubmit = async () => {
-        handleData({ tipoDeInstrumento, instDeMedicaoVoltimetroCorrenteContinua, instDeMedicaoVoltimetroCorrenteAlternada, instDeMedicaoAmperimetroCorrenteContinua, instDeMedicaoAmperimetroCorrenteAlternada, transdutorQuatroAVinteMATensao, transdutorQuatroAVinteMACorrente })
+        handleData({ 
+            tipo_de_instrumento: tipoDeInstrumento, 
+            instrumento_de_medicao_voltimetro_corrente_continua: instrumentoDeMedicaoVoltimetroCorrenteContinua, 
+            instrumento_de_medicao_voltimetro_corrente_alternada: instrumentoDeMedicaoVoltimetroCorrenteAlternada, 
+            instrumento_de_medicao_amperimetro_corrente_continua: instrumentoDeMedicaoAmperimetroCorrenteContinua, 
+            instrumento_de_medicao_amperimetro_corrente_alternada: instrumentoDeMedicaoAmperimetroCorrenteAlternada, 
+            transdutor_quatro_a_vinte_ma_tensao: transdutorQuatroAVinteMATensao, 
+            transdutor_quatro_a_vinte_ma_corrente: transdutorQuatroAVinteMACorrente 
+        })
         setCanGo(true)
     }
 
     useEffect(() => {
-        setTipoDeInstrumento(data.tipoDeInstrumento)
-        setInstDeMedicaoVoltimetroCorrenteContinua(data.instDeMedicaoVoltimetroCorrenteContinua)
-        setInstDeMedicaoVoltimetroCorrenteAlternada(data.instDeMedicaoVoltimetroCorrenteAlternada)
-        setInstDeMedicaoAmperimetroCorrenteContinua(data.instDeMedicaoAmperimetroCorrenteContinua)
-        setInstDeMedicaoAmperimetroCorrenteAlternada(data.instDeMedicaoAmperimetroCorrenteAlternada)
-        setTransdutorQuatroAVinteMATensao(data.transdutorQuatroAVinteMATensao)
-        setTransdutorQuatroAVinteMACorrente(data.transdutorQuatroAVinteMACorrente)
+        setTipoDeInstrumento(data.tipo_de_instrumento)
+        setInstrumentoDeMedicaoVoltimetroCorrenteContinua(data.instrumento_de_medicao_voltimetro_corrente_continua)
+        setInstrumentoDeMedicaoVoltimetroCorrenteAlternada(data.instrumento_de_medicao_voltimetro_corrente_continua)
+        setInstrumentoDeMedicaoAmperimetroCorrenteContinua(data.instrumento_de_medicao_amperimetro_corrente_continua)
+        setInstrumentoDeMedicaoAmperimetroCorrenteAlternada(data.instrumento_de_medicao_amperimetro_corrente_alternada)
+        setTransdutorQuatroAVinteMATensao(data.transdutor_quatro_a_vinte_ma_tensao)
+        setTransdutorQuatroAVinteMACorrente(data.transdutor_quatro_a_vinte_ma_corrente)
     }, [])
 
     useEffect(() => {
         if(canGo) {
-            const fields: (keyof ProposalData)[] = ['tipoDeInstrumento', 'instDeMedicaoVoltimetroCorrenteContinua', 'instDeMedicaoVoltimetroCorrenteAlternada', 'instDeMedicaoAmperimetroCorrenteContinua', 'instDeMedicaoAmperimetroCorrenteAlternada', 'transdutorQuatroAVinteMATensao', 'transdutorQuatroAVinteMACorrente'];
+            const fields: (keyof ProposalData)[] = [
+                'tipo_de_instrumento', 
+                'instrumento_de_medicao_voltimetro_corrente_continua', 
+                'instrumento_de_medicao_voltimetro_corrente_alternada', 
+                'instrumento_de_medicao_amperimetro_corrente_continua', 
+                'instrumento_de_medicao_amperimetro_corrente_alternada', 
+                'transdutor_quatro_a_vinte_ma_tensao', 
+                'transdutor_quatro_a_vinte_ma_corrente'
+            ];
             const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
         
             const allFieldsFilled = fields.every(field => {
@@ -80,7 +89,7 @@ export function CostSeventh() {
                 ]}
                 value={tipoDeInstrumento}
                 onChange={(e) => setTipoDeInstrumento(e)}
-                error={errors.tipoDeInstrumento}
+                error={errors.tipo_de_instrumento}
             />
 
             <Radio
@@ -89,22 +98,23 @@ export function CostSeventh() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputInstDeMedicaoVoltimetroCorrenteContinua ? 'Sim' : instDeMedicaoVoltimetroCorrenteContinua}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputInstDeMedicaoVoltimetroCorrenteContinua(true);
-                } else {
-                    setOpenInputInstDeMedicaoVoltimetroCorrenteContinua(false);
-                    setInstDeMedicaoVoltimetroCorrenteContinua(e)
-                } } }
-                error={ openInputInstDeMedicaoVoltimetroCorrenteContinua ? "" : errors.instDeMedicaoVoltimetroCorrenteContinua}
+                value={ instrumentoDeMedicaoVoltimetroCorrenteContinua === "Não" ? 'Não' : instrumentoDeMedicaoVoltimetroCorrenteContinua !== "" ? "Sim" : ""}
+                onChange={(e) => { 
+                    if (e === "Não") {
+                        setInstrumentoDeMedicaoVoltimetroCorrenteContinua(e)
+                    } else {
+                        setInstrumentoDeMedicaoVoltimetroCorrenteContinua("")
+                    }
+                    } }
+                error={ instrumentoDeMedicaoVoltimetroCorrenteContinua === "Não" ? "" : errors.instrumento_de_medicao_voltimetro_corrente_continua}
             />
 
-            { openInputInstDeMedicaoVoltimetroCorrenteContinua ?          
-                <Select error={errors.instDeMedicaoVoltimetroCorrenteContinua} onChange={(e) => setInstDeMedicaoVoltimetroCorrenteContinua(e.target.value)} value={instDeMedicaoVoltimetroCorrenteContinua}>
+            { instrumentoDeMedicaoVoltimetroCorrenteContinua !== "Não" ?      
+                <Select error={errors.instrumento_de_medicao_voltimetro_corrente_continua} onChange={(e) => setInstrumentoDeMedicaoVoltimetroCorrenteContinua(e.target.value)} value={instrumentoDeMedicaoVoltimetroCorrenteContinua}>
                     <option value="">Selecione...</option>
-                    <option value="P/ BATERIA (Vcc)" selected={instDeMedicaoVoltimetroCorrenteContinua === "P/ BATERIA (Vcc)"}>P/ BATERIA (Vcc)</option>
-                    <option value="P/ CONSUMIDOR (Vcc)" selected={instDeMedicaoVoltimetroCorrenteContinua === "P/ CONSUMIDOR (Vcc)"}>P/ CONSUMIDOR (Vcc)</option>
-                    <option value="CONSUMIDOR + BATERIA (Vcc)" selected={instDeMedicaoVoltimetroCorrenteContinua === "CONSUMIDOR + BATERIA (Vcc)"}>CONSUMIDOR + BATERIA (Vcc)</option>
+                    <option value="P/ BATERIA (Vcc)" selected={instrumentoDeMedicaoVoltimetroCorrenteContinua === "P/ BATERIA (Vcc)"}>P/ BATERIA (Vcc)</option>
+                    <option value="P/ CONSUMIDOR (Vcc)" selected={instrumentoDeMedicaoVoltimetroCorrenteContinua === "P/ CONSUMIDOR (Vcc)"}>P/ CONSUMIDOR (Vcc)</option>
+                    <option value="CONSUMIDOR + BATERIA (Vcc)" selected={instrumentoDeMedicaoVoltimetroCorrenteContinua === "CONSUMIDOR + BATERIA (Vcc)"}>CONSUMIDOR + BATERIA (Vcc)</option>
                 </Select>   
             : null }
 
@@ -114,21 +124,22 @@ export function CostSeventh() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputInstDeMedicaoVoltimetroCorrenteAlternada ? 'Sim' : instDeMedicaoVoltimetroCorrenteAlternada}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputInstDeMedicaoVoltimetroCorrenteAlternada(true);
-                } else {
-                    setOpenInputInstDeMedicaoVoltimetroCorrenteAlternada(false);
-                    setInstDeMedicaoVoltimetroCorrenteAlternada(e)
-                } } }
-                error={ openInputInstDeMedicaoVoltimetroCorrenteAlternada ? "" : errors.instDeMedicaoVoltimetroCorrenteAlternada}
+                value={ instrumentoDeMedicaoVoltimetroCorrenteAlternada === "Não" ? 'Não' : instrumentoDeMedicaoVoltimetroCorrenteAlternada !== "" ? "Sim" : ""}
+                onChange={(e) => {
+                    if (e === "Não") {
+                        setInstrumentoDeMedicaoVoltimetroCorrenteAlternada(e)
+                    } else {
+                        setInstrumentoDeMedicaoVoltimetroCorrenteAlternada("")
+                    } 
+                } }
+                error={ instrumentoDeMedicaoVoltimetroCorrenteAlternada === "Não" ? "" : errors.instrumento_de_medicao_voltimetro_corrente_alternada}
             />
 
-            { openInputInstDeMedicaoVoltimetroCorrenteAlternada ?          
-                <Select error={errors.instDeMedicaoVoltimetroCorrenteAlternada} onChange={(e) => setInstDeMedicaoVoltimetroCorrenteAlternada(e.target.value)} value={instDeMedicaoVoltimetroCorrenteAlternada}>
+            { instrumentoDeMedicaoVoltimetroCorrenteAlternada !== "Não" ?    
+                <Select error={errors.instrumento_de_medicao_voltimetro_corrente_alternada} onChange={(e) => setInstrumentoDeMedicaoVoltimetroCorrenteAlternada(e.target.value)} value={instrumentoDeMedicaoVoltimetroCorrenteAlternada}>
                     <option value="">Selecione...</option>
-                    <option value="KIT VCA s/TP c/CH ROTATIVA" selected={instDeMedicaoVoltimetroCorrenteAlternada === "KIT VCA s/TP c/CH ROTATIVA"}>KIT VCA s/TP c/CH ROTATIVA</option>
-                    <option value="KIT VCA c/TP E CH ROTATIVA" selected={instDeMedicaoVoltimetroCorrenteAlternada === "KIT VCA c/TP E CH ROTATIVA"}>KIT VCA c/TP E CH ROTATIVA</option>
+                    <option value="KIT VCA s/TP c/CH ROTATIVA" selected={instrumentoDeMedicaoVoltimetroCorrenteAlternada === "KIT VCA s/TP c/CH ROTATIVA"}>KIT VCA s/TP c/CH ROTATIVA</option>
+                    <option value="KIT VCA c/TP E CH ROTATIVA" selected={instrumentoDeMedicaoVoltimetroCorrenteAlternada === "KIT VCA c/TP E CH ROTATIVA"}>KIT VCA c/TP E CH ROTATIVA</option>
                 </Select>   
             : null }
 
@@ -138,22 +149,22 @@ export function CostSeventh() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputInstDeMedicaoAmperimetroCorrenteContinua ? 'Sim' : instDeMedicaoAmperimetroCorrenteContinua}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputInstDeMedicaoAmperimetroCorrenteContinua(true);
-                } else {
-                    setOpenInputInstDeMedicaoAmperimetroCorrenteContinua(false);
-                    setInstDeMedicaoAmperimetroCorrenteContinua(e)
-                } } }
-                error={openInputInstDeMedicaoAmperimetroCorrenteContinua ? "" : errors.instDeMedicaoAmperimetroCorrenteContinua}
+                value={ instrumentoDeMedicaoAmperimetroCorrenteContinua === "Não" ? 'Não'  : instrumentoDeMedicaoAmperimetroCorrenteContinua !== "" ? "Sim" : ""}
+                onChange={(e) => { 
+                    if (e === "Não") {
+                        setInstrumentoDeMedicaoVoltimetroCorrenteAlternada(e)
+                    } else {
+                        setInstrumentoDeMedicaoVoltimetroCorrenteAlternada("")
+                    }  } }
+                error={instrumentoDeMedicaoAmperimetroCorrenteContinua === "Não" ? "" : errors.instrumento_de_medicao_amperimetro_corrente_continua}
             />
 
-            { openInputInstDeMedicaoAmperimetroCorrenteContinua ?          
-                <Select error={errors.instDeMedicaoAmperimetroCorrenteContinua} onChange={(e) => setInstDeMedicaoAmperimetroCorrenteContinua(e.target.value)} value={instDeMedicaoAmperimetroCorrenteContinua}>
+            { instrumentoDeMedicaoAmperimetroCorrenteContinua !== "Não" ?        
+                <Select error={errors.instrumento_de_medicao_amperimetro_corrente_continua} onChange={(e) => setInstrumentoDeMedicaoAmperimetroCorrenteContinua(e.target.value)} value={instrumentoDeMedicaoAmperimetroCorrenteContinua}>
                     <option value="">Selecione...</option>
-                    <option value="P/ BATERIA (Acc)" selected={instDeMedicaoAmperimetroCorrenteContinua === "P/ BATERIA (Acc)"}>P/ BATERIA (Acc)</option>
-                    <option value="P/ CONSUMIDOR (Acc)" selected={instDeMedicaoAmperimetroCorrenteContinua === "P/ CONSUMIDOR (Acc)"}>P/ CONSUMIDOR (Acc)</option>
-                    <option value="CONSUMIDOR + BATERIA (Acc)" selected={instDeMedicaoAmperimetroCorrenteContinua === "CONSUMIDOR + BATERIA (Acc)"}>CONSUMIDOR + BATERIA (Acc)</option>
+                    <option value="P/ BATERIA (Acc)" selected={instrumentoDeMedicaoAmperimetroCorrenteContinua === "P/ BATERIA (Acc)"}>P/ BATERIA (Acc)</option>
+                    <option value="P/ CONSUMIDOR (Acc)" selected={instrumentoDeMedicaoAmperimetroCorrenteContinua === "P/ CONSUMIDOR (Acc)"}>P/ CONSUMIDOR (Acc)</option>
+                    <option value="CONSUMIDOR + BATERIA (Acc)" selected={instrumentoDeMedicaoAmperimetroCorrenteContinua === "CONSUMIDOR + BATERIA (Acc)"}>CONSUMIDOR + BATERIA (Acc)</option>
                 </Select>   
             : null }
 
@@ -163,20 +174,20 @@ export function CostSeventh() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputInstDeMedicaoAmperimetroCorrenteAlternada ? 'Sim' : instDeMedicaoAmperimetroCorrenteAlternada}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputInstDeMedicaoAmperimetroCorrenteAlternada(true);
-                } else {
-                    setOpenInputInstDeMedicaoAmperimetroCorrenteAlternada(false);
-                    setInstDeMedicaoAmperimetroCorrenteAlternada(e)
-                } } }
-                error={openInputInstDeMedicaoAmperimetroCorrenteAlternada ? "" : errors.instDeMedicaoAmperimetroCorrenteAlternada}
+                value={ instrumentoDeMedicaoAmperimetroCorrenteAlternada === "Não" ? 'Não' : instrumentoDeMedicaoAmperimetroCorrenteAlternada !== "" ? "Sim" : ""}
+                onChange={(e) => {
+                    if (e === "Não") {
+                        setInstrumentoDeMedicaoAmperimetroCorrenteAlternada(e)
+                    } else {
+                        setInstrumentoDeMedicaoAmperimetroCorrenteAlternada("")
+                    } } }
+                error={instrumentoDeMedicaoAmperimetroCorrenteAlternada === "Não" ? "" : errors.instrumento_de_medicao_amperimetro_corrente_alternada}
             />
 
-            { openInputInstDeMedicaoAmperimetroCorrenteAlternada ?          
-                <Select error={errors.instDeMedicaoAmperimetroCorrenteAlternada} onChange={(e) => setInstDeMedicaoAmperimetroCorrenteAlternada(e.target.value)} value={instDeMedicaoAmperimetroCorrenteAlternada}>
+            { instrumentoDeMedicaoAmperimetroCorrenteAlternada !== "Não" ?      
+                <Select error={errors.instrumento_de_medicao_amperimetro_corrente_alternada} onChange={(e) => setInstrumentoDeMedicaoAmperimetroCorrenteAlternada(e.target.value)} value={instrumentoDeMedicaoAmperimetroCorrenteAlternada}>
                     <option value="">Selecione...</option>
-                    <option value="KIT VCA c/TC c/CH ROTATIVA (Aca)" selected={instDeMedicaoAmperimetroCorrenteAlternada === "KIT VCA c/TC c/CH ROTATIVA (Aca)"}>KIT VCA c/TC c/CH ROTATIVA (Aca)</option>
+                    <option value="KIT VCA c/TC c/CH ROTATIVA (Aca)" selected={instrumentoDeMedicaoAmperimetroCorrenteAlternada === "KIT VCA c/TC c/CH ROTATIVA (Aca)"}>KIT VCA c/TC c/CH ROTATIVA (Aca)</option>
                 </Select>   
             : null }
 
@@ -186,18 +197,18 @@ export function CostSeventh() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputTransdutorQuatroAVinteMATensao ? 'Sim' : transdutorQuatroAVinteMATensao}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputTransdutorQuatroAVinteMATensao(true);
-                } else {
-                    setOpenInputTransdutorQuatroAVinteMATensao(false);
-                    setTransdutorQuatroAVinteMATensao(e)
-                } } }
-                error={openInputTransdutorQuatroAVinteMATensao ? "" : errors.transdutorQuatroAVinteMATensao}
+                value={ transdutorQuatroAVinteMATensao === "Não" ? 'Não' : transdutorQuatroAVinteMATensao !== "" ? "Sim" : ""}
+                onChange={(e) => { 
+                    if (e === "Não") {
+                        setTransdutorQuatroAVinteMATensao(e)
+                    } else {
+                        setTransdutorQuatroAVinteMATensao("")
+                    } } }
+                error={transdutorQuatroAVinteMATensao === "Não" ? "" : errors.transdutor_quatro_a_vinte_ma_tensao}
             />
 
-            { openInputTransdutorQuatroAVinteMATensao ?          
-                <Select  error={errors.transdutorQuatroAVinteMATensao} onChange={(e) => setTransdutorQuatroAVinteMATensao(e.target.value)} value={transdutorQuatroAVinteMATensao}>
+            { transdutorQuatroAVinteMATensao !== "Não" ?         
+                <Select  error={errors.transdutor_quatro_a_vinte_ma_tensao} onChange={(e) => setTransdutorQuatroAVinteMATensao(e.target.value)} value={transdutorQuatroAVinteMATensao}>
                     <option value="">Selecione...</option>
                     <option value="P/ BATERIA (Vcc)" selected={transdutorQuatroAVinteMATensao === "P/ BATERIA (Vcc)"}>P/ BATERIA (Vcc)</option>
                     <option value="P/ CONSUMIDOR (Vcc)" selected={transdutorQuatroAVinteMATensao === "P/ CONSUMIDOR (Vcc)"}>P/ CONSUMIDOR (Vcc)</option>
@@ -213,18 +224,19 @@ export function CostSeventh() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputTransdutorQuatroAVinteMACorrente ? 'Sim' : transdutorQuatroAVinteMACorrente}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputTransdutorQuatroAVinteMACorrente(true);
-                } else {
-                    setOpenInputTransdutorQuatroAVinteMACorrente(false);
-                    setTransdutorQuatroAVinteMACorrente(e)
-                } } }
-                error={openInputTransdutorQuatroAVinteMACorrente ? "" :  errors.transdutorQuatroAVinteMACorrente}
+                value={ transdutorQuatroAVinteMACorrente === "Não" ? 'Não' : transdutorQuatroAVinteMACorrente !== "" ? "Sim" : ""}
+                onChange={(e) => { 
+                    if (e === "Não") {
+                        setTransdutorQuatroAVinteMACorrente(e)
+                    } else {
+                        setTransdutorQuatroAVinteMACorrente("")
+                    }
+                 } }
+                error={transdutorQuatroAVinteMACorrente === "Não" ? "" :  errors.transdutor_quatro_a_vinte_ma_corrente}
             />
 
-            { openInputTransdutorQuatroAVinteMACorrente ?          
-                <Select error={errors.transdutorQuatroAVinteMACorrente} onChange={(e) => setTransdutorQuatroAVinteMACorrente(e.target.value)} value={transdutorQuatroAVinteMACorrente}>
+            { transdutorQuatroAVinteMACorrente !== "Não" ?         
+                <Select error={errors.transdutor_quatro_a_vinte_ma_corrente} onChange={(e) => setTransdutorQuatroAVinteMACorrente(e.target.value)} value={transdutorQuatroAVinteMACorrente}>
                     <option value="">Selecione...</option>
                     <option value="P/ BATERIA (Vcc)" selected={transdutorQuatroAVinteMACorrente === "P/ BATERIA (Vcc)"}>P/ BATERIA (Vcc)</option>
                     <option value="P/ CONSUMIDOR (Vcc)" selected={transdutorQuatroAVinteMACorrente === "P/ CONSUMIDOR (Vcc)"}>P/ CONSUMIDOR (Vcc)</option>

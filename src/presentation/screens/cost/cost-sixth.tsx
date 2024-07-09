@@ -17,33 +17,48 @@ export function CostSixth() {
     const [plaquetaDeIdentificacao, setPlaquetaDeIdentificacao] = useState('')
     const [sensoresCorrenteAlternada, setSensoresCorrenteAlternada] = useState('')
 
-    const [openInputSensoresCorrenteAlternada, setOpenInputSensoresCorrentesAlternadas] = useState(false)
-    const [openInputSinalizacaoVisualLed, setOpenInputSinalizacaoVisualLed] = useState(false)
-
     const [errors, setErrors] = useState<Partial<Record<keyof ProposalData, string>>>({})
     const [canGo, setCanGo] = useState(false)
 
     const { data, handleData } = useProposal()
 
     const onSubmit = async () => {
-        handleData({ diodoDeBloqueio, disconexaoDeBateria, alarmeSonoro, sinalizacaoVisualLed, sinalizacaoRemotaSeteReles, protecaoContraSurtosAdicional, plaquetaDeIdentificacao, sensoresCorrenteAlternada })
+        handleData({ 
+            diodo_de_bloqueio: diodoDeBloqueio, 
+            disconexao_de_bateria: disconexaoDeBateria, 
+            alarme_sonoro: alarmeSonoro, 
+            sinalizacao_visual_led: sinalizacaoVisualLed, 
+            sinalizacao_remota_sete_reles: sinalizacaoRemotaSeteReles, 
+            protecao_contra_surtos_adicional: protecaoContraSurtosAdicional, 
+            plaqueta_de_identificacao: plaquetaDeIdentificacao, 
+            sensores_corrente_alternada: sensoresCorrenteAlternada 
+        })
         setCanGo(true)
     }
 
     useEffect(() => {
-        setDiodoDeBloqueio(data.diodoDeBloqueio)
-        setDisconexaoDeBateria(data.disconexaoDeBateria)
-        setAlarmeSonoro(data.alarmeSonoro)
-        setSinalizacaoVisualLed(data.sinalizacaoVisualLed)
-        setSinalizacaoRemotaSeteReles(data.sinalizacaoRemotaSeteReles)
-        setProtecaoContraSurtosAdicional(data.protecaoCircuitosAuxiliares)
-        setPlaquetaDeIdentificacao(data.plaquetaDeIdentificacao)
-        setSensoresCorrenteAlternada(data.sensoresCorrenteAlternada)
+        setDiodoDeBloqueio(data.diodo_de_bloqueio)
+        setDisconexaoDeBateria(data.disconexao_de_bateria)
+        setAlarmeSonoro(data.alarme_sonoro)
+        setSinalizacaoVisualLed(data.sinalizacao_visual_led)
+        setSinalizacaoRemotaSeteReles(data.sinalizacao_remota_sete_reles)
+        setProtecaoContraSurtosAdicional(data.protecao_contra_surtos_adicional)
+        setPlaquetaDeIdentificacao(data.plaqueta_de_identificacao)
+        setSensoresCorrenteAlternada(data.sensores_corrente_alternada)
     }, [])
 
     useEffect(() => {
         if(canGo) {
-            const fields: (keyof ProposalData)[] = ['diodoDeBloqueio', 'disconexaoDeBateria', 'alarmeSonoro', 'sinalizacaoVisualLed', 'sinalizacaoRemotaSeteReles', 'protecaoContraSurtosAdicional', 'plaquetaDeIdentificacao', 'sensoresCorrenteAlternada'];
+            const fields: (keyof ProposalData)[] = [
+                'diodo_de_bloqueio', 
+                'disconexao_de_bateria', 
+                'alarme_sonoro', 
+                'sinalizacao_visual_led', 
+                'sinalizacao_remota_sete_reles', 
+                'protecao_contra_surtos_adicional', 
+                'plaqueta_de_identificacao', 
+                'sensores_corrente_alternada'
+            ];
             const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
         
             const allFieldsFilled = fields.every(field => {
@@ -79,7 +94,7 @@ export function CostSixth() {
                 ]}
                 value={diodoDeBloqueio}
                 onChange={(e) => setDiodoDeBloqueio(e)}
-                error={errors.diodoDeBloqueio}
+                error={errors.diodo_de_bloqueio}
             />
 
             <Radio
@@ -90,7 +105,7 @@ export function CostSixth() {
                 ]}
                 value={disconexaoDeBateria}
                 onChange={(e) => setDisconexaoDeBateria(e)}
-                error={errors.disconexaoDeBateria}
+                error={errors.disconexao_de_bateria}
             />
 
             <Radio
@@ -101,7 +116,7 @@ export function CostSixth() {
                 ]}
                 value={alarmeSonoro}
                 onChange={(e) => setAlarmeSonoro(e)}
-                error={errors.alarmeSonoro}
+                error={errors.alarme_sonoro}
             />
 
             <Radio
@@ -110,18 +125,17 @@ export function CostSixth() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputSinalizacaoVisualLed ? 'Sim' : sinalizacaoVisualLed}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputSinalizacaoVisualLed(true);
-                } else {
-                    setOpenInputSinalizacaoVisualLed(false);
+                value={ sinalizacaoVisualLed === "Não" ? 'Não' : sinalizacaoVisualLed !== "" ? "Sim" : ""}
+                onChange={(e) => {     if (e === "Não") {
                     setSinalizacaoVisualLed(e)
+                } else {
+                    setSinalizacaoVisualLed("")
                 } } }
-                error={errors.sinalizacaoVisualLed}
+                error={ sinalizacaoVisualLed === "Não" ? "" : errors.sinalizacao_visual_led}
             />
 
-            { openInputSinalizacaoVisualLed ?          
-                <Select error={errors.sinalizacaoVisualLed} onChange={(e) => setSinalizacaoVisualLed(e.target.value)} value={sinalizacaoVisualLed}>
+            { sinalizacaoVisualLed !== "Não" ?          
+                <Select error={errors.sinalizacao_visual_led} onChange={(e) => setSinalizacaoVisualLed(e.target.value)} value={sinalizacaoVisualLed}>
                     <option value="">Selecione...</option>
                     <option value="Kit CCI Box Led" selected={sinalizacaoVisualLed === "Kit CCI Box Led"}>Kit CCI Box Led</option>
                     <option value="Kit Led 22mm" selected={sinalizacaoVisualLed === "Kit Led 22mm"}>Kit Led 22mm</option>
@@ -138,7 +152,7 @@ export function CostSixth() {
                 ]}
                 value={sinalizacaoRemotaSeteReles}
                 onChange={(e) => setSinalizacaoRemotaSeteReles(e)}
-                error={errors.sinalizacaoRemotaSeteReles}
+                error={errors.sinalizacao_remota_sete_reles}
             />
 
             <Radio
@@ -149,10 +163,10 @@ export function CostSixth() {
                 ]}
                 value={protecaoContraSurtosAdicional}
                 onChange={(e) => setProtecaoContraSurtosAdicional(e)}
-                error={errors.protecaoCircuitosAuxiliares}
+                error={errors.protecao_contra_surtos_adicional}
             />
 
-            <Select label="Plaqueta de Identificação" error={errors.plaquetaDeIdentificacao} onChange={(e) => setPlaquetaDeIdentificacao(e.target.value)} value={plaquetaDeIdentificacao}>
+            <Select label="Plaqueta de Identificação" error={errors.plaqueta_de_identificacao} onChange={(e) => setPlaquetaDeIdentificacao(e.target.value)} value={plaquetaDeIdentificacao}>
                 <option value="">Selecione...</option>
                 <option value="PL ALUMINIO + TAG's em ALUMINIO" selected={plaquetaDeIdentificacao === "PL ALUMINIO + TAG's em ALUMINIO"}>PL ALUMINIO + TAG's em ALUMINIO (PADRÃO)</option>
                 <option value="PL INOX + TAG's EM ACRILICO" selected={plaquetaDeIdentificacao === "PL INOX + TAG's EM ACRILICO"}>PL INOX + TAG's EM ACRILICO</option>
@@ -165,20 +179,19 @@ export function CostSixth() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputSensoresCorrenteAlternada ? 'Sim' : sensoresCorrenteAlternada}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputSensoresCorrentesAlternadas(true);
-                } else {
-                    setOpenInputSensoresCorrentesAlternadas(false);
+                value={ sensoresCorrenteAlternada === "Não" ? 'Não' : sensoresCorrenteAlternada !== "" ? "Sim" : ""}
+                onChange={(e) => { if (e === "Não") {
                     setSensoresCorrenteAlternada(e)
+                } else {
+                    setSensoresCorrenteAlternada("")
                 } } }
-                error={errors.sensoresCorrenteAlternada}
+                error={sensoresCorrenteAlternada === "Não" ? "" : errors.sensores_corrente_alternada}
             />
 
-            { openInputSensoresCorrenteAlternada ?          
-                <Select error={errors.sensoresCorrenteAlternada} onChange={(e) => setSensoresCorrenteAlternada(e.target.value)} value={sensoresCorrenteAlternada}>
+            { sensoresCorrenteAlternada !== "Não" ?          
+                <Select error={errors.sensores_corrente_alternada} onChange={(e) => setSensoresCorrenteAlternada(e.target.value)} value={sensoresCorrenteAlternada}>
                     <option value="">Selecione...</option>
-                    <option value="KIT RELE FALTA DE FASE (WEG/COEL);" selected={sensoresCorrenteAlternada === "KIT RELE FALTA DE FASE (WEG/COEL)"}>KIT RELE FALTA DE FASE (WEG/COEL);</option>
+                    <option value="KIT RELE FALTA DE FASE (WEG/COEL)" selected={sensoresCorrenteAlternada === "KIT RELE FALTA DE FASE (WEG/COEL)"}>KIT RELE FALTA DE FASE (WEG/COEL)</option>
                     <option value="KIT RELE SEQUENCIA DE FASE" selected={sensoresCorrenteAlternada === "KIT RELE SEQUENCIA DE FASE"}>KIT RELE SEQUENCIA DE FASE</option>
                 </Select>   
             : null }

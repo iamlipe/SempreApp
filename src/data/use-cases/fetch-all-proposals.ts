@@ -6,7 +6,7 @@ import { dbPath } from "../utils/db-path";
 ipcMain.handle('fetch-all-proposals', async () => {
     try {
         const db = new Database(dbPath);
-        const rows = db.prepare('SELECT * FROM proposal').all();
+        const rows = db.prepare('SELECT * FROM propostas').all();
         db.close();
         console.log('Lista de propostas obtida com sucesso.');
         return rows;

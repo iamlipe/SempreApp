@@ -1,281 +1,151 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react"
+import { Proposal } from "../../data/models/proposal"
 
 export const fieldLabels: Record<keyof ProposalData, string> = {
-    proposalNumber: 'Número da Proposta',
-    customerReference: 'Referência do Cliente',
-    company: 'Empresa',
+    numero_da_proposta: 'Número da Proposta',
+    referencia_do_cliente: 'Referência do Cliente',
+    empresa: 'Empresa',
     cnpj: 'CNPJ',
-    requester: 'Solicitante',
+    solicitante: 'Solicitante',
     email: 'Email',
-    phone: 'Telefone',
-    invoicing: "Faturamento",
-    invoicingStatus: "Estado de Faturamento",
-    system: "Sistema",
-    formPayment: "Forma de Pagamento",
-    notesPaymentCondition: "Observações Condição de Pagamento",
-    deliveryTimeAndSchedule: "Prazo de Entrega e Cronograma",
-    shortTextItemFieldOne: "Texto Abreviado Campo do Item 1",
-    featuresOfTheFirstBatteryBank: "Características do Primeiro Banco de Baterias",
-    shortTextItemFieldTwo: "Texto Abreviado Campo do Item 2",
-    featuresOfTheSecondBatteryBank: "Características do Segundo Banco de Baterias",
-    createdAt: "Criado Quando",
-    equipmentType: "Tipo de Equipamento",
-    nominalVoltage: "Tensão Nominal",
-    outputCurrent: "Corrente de Saída",
-    nominalInputVoltage: "Tensão Nominal Entrada",
-    nominalFrequency: "Frequência Nominal",
-    powerFactor: "Fator de Potência",
-    tolerance: "Tolerância",
-    efficiency: "Rendimento",
-    batteryType: "Tipo de Baterias",
-    numberOfElements: "Número de Elementos",
-    capacity: "Capacidade",
-    voltageFluctuation: "Voltagem de Flutuação",
-    voltageLoad: "Voltagem de Carga",
-    voltageDeepDischarge: "Voltagem de Carga Profunda V/el",
+    telefone: 'Telefone',
 
-    tensaoMaximaConsumidor: "Tensão Máxima Consumidor",
-    tensaoMinimaConsumidor: "Tensão Mínima Consumidor",
-    quedaNaUDQ: "Queda na UDQ",
-    numeroDeEstagios: "Número de Estágios",
-    tipoRetificador: "Retificador Tipo ”TPRS” Sistema Temporizado",
-    distorcaoHarmonica: "Distorção Harmônica",
+    faturamento: "Faturamento",
+    estado_de_faturamento: "Estado de Faturamento",
+    sistema: "Sistema",
+    forma_de_pagamento: "Forma de Pagamento",
+    condicao_de_pagamento: "Observações Condição de Pagamento",
 
-    correnteDeEntradaProtecaoGeral: "Corrente de Entrada",
-    tipoDeDisjuntorProtecaoGeral: "Tipo de Disjuntor",
-    correnteDeRupturaProtecaoGeral: "Corrente de Ruptura (KA)",
-    contatoAuxiliarProtecaoGeral: "Contato Auxiliar / bobina",
-    correnteDeSaidaBateria: "Corrente de Saída (A)",
-    tipoDisjuntorBateria: "Tipo de Disjuntor",
-    correnteDeRupturaBateria: "Corrente de Ruptura (KA)",
-    contatoAuxiliarBateria: "Contato Auxiliar / bobina",
-    correnteDeSaidaConsumidor: "Corrente de Saída (A)",
-    tipoDisjuntoConsumidor: "Tipo de Disjuntor",
-    correnteDeRupturaConsumidor: "Corrente de Ruptura (KA)",
-    contatoAuxiliarConsumidor: "Contato Auxiliar / bobina",
-    quantidadeDeDisjuntoresConsumidor: "Quantidade de Disjuntores",
+    prazo_de_entrega_e_cronograma: "Prazo de Entrega e Cronograma",
+    campo_item_1: "Texto Abreviado Campo do Item 1",
+    caracteristicas_do_primeiro_banco_de_baterias: "Características do Primeiro Banco de Baterias",
+    campo_item_2: "Texto Abreviado Campo do Item 2",
+    caracteristicas_do_segundo_banco_de_baterias: "Características do Segundo Banco de Baterias",
 
-    fusivelDePotencia: "Fusível de Potência (F1)",
-    protecaoCircuitosAuxiliares: "Proteção circuitos auxiliares",
-    fusivelDePotenciaNaColunaRetificadora: "Fusível de Potência na coluna retificadora (FR1/FR2/FR3)",
-    tratamentoDaBarra: "Tratamento da Barra",
-    tipoDeFiacao: "Tipo de Fiação",
-    identificacaoDeCabos: "Identificação de Cabos",
+    tipo_de_equipamento: "Tipo de Equipamento",
+    tensao_nominal: "Tensão Nominal",
+    corrente_de_saida: "Corrente de Saída",
+    tensao_nominal_entrada: "Tensão Nominal Entrada",
+    frequencia_nominal: "Frequência Nominal",
+    fator_de_potencia: "Fator de Potência",
+    tolerancia: "Tolerância",
+    rendimento: "Rendimento",
+    tipo_de_bateria: "Tipo de Baterias",
+    numero_de_elementos: "Número de Elementos",
+    capacidade: "Capacidade",
+    voltagem_de_flutuacao: "Voltagem de Flutuação",
+    voltagem_de_carga: "Voltagem de Carga",
+    voltagem_de_carga_profunda: "Voltagem de Carga Profunda V/el",
 
-    materialDoGabinete: "Material do Gabinete",
-    grauDeProtecao: "Grau de Proteção",
-    tipoDePintura: "Tipo de Pintura",
-    corExterna: "Cor externa",
-    soleiraNaBase: "Soleira na base",
-    entradaESaidaDeCabos: "Entrada e saída de cabos",
-    exaustaoDeArQuente: "Exaustão de ar quente",
-    protecaoNR10: "Proteção NR10",
+    tensao_maxima_consumidor: "Tensão Máxima Consumidor",
+    tensao_minima_consumidor: "Tensão Mínima Consumidor",
+    queda_na_uqd: "Queda na UDQ",
+    numero_de_estagios: "Número de Estágios",
+    tipo_de_retificador: "Retificador Tipo ”TPRS” Sistema Temporizado",
+    distorcao_harmonica: "Distorção Harmônica",
 
-    diodoDeBloqueio: "Diodo de Bloqueio",
-    disconexaoDeBateria: "Disconexão de Bateria",
-    alarmeSonoro: "Alarme Sonoro",
-    sinalizacaoVisualLed: "Sinalização Visual Led",
-    sinalizacaoRemotaSeteReles: "Sinalização Remota 7 reles",
-    protecaoContraSurtosAdicional: "Proteção Contra Surtos Adicional",
-    plaquetaDeIdentificacao: "Plaqueta de Identificação",
-    sensoresCorrenteAlternada: "Sensores CA",
+    corrente_de_entrada_protecao_geral: "Corrente de Entrada",
+    tipo_de_disjuntor_protecao_geral: "Tipo de Disjuntor",
+    corrente_de_ruptura_protecao_geral: "Corrente de Ruptura (KA)",
+    contato_auxiliar_protecao_geral: "Contato Auxiliar / bobina",
+    corrente_de_saida_bateria: "Corrente de Saída (A)",
+    tipo_de_disjuntor_bateria: "Tipo de Disjuntor",
+    corrente_de_ruptura_bateria: "Corrente de Ruptura (KA)",
+    contato_auxiliar_bateria: "Contato Auxiliar / bobina",
+    corrente_de_saida_consumidor: "Corrente de Saída (A)",
+    tipo_de_disjuntor_consumidor: "Tipo de Disjuntor",
+    corrente_de_ruptura_consumidor: "Corrente de Ruptura (KA)",
+    contato_auxiliar_consumidor: "Contato Auxiliar / bobina",
+    quantidade_de_disjuntores_consumidor: "Quantidade de Disjuntores",
 
-    tipoDeInstrumento: "Tipo de Instrumento",
-    instDeMedicaoVoltimetroCorrenteContinua: "Inst. de medição Voltímetro CC",
-    instDeMedicaoVoltimetroCorrenteAlternada: "Inst. de medição Voltímetro CA",
-    instDeMedicaoAmperimetroCorrenteContinua: "Inst. de medição Amperim. CC",
-    instDeMedicaoAmperimetroCorrenteAlternada: "Inst. de medição Amperim. CA",
-    transdutorQuatroAVinteMATensao: "Transdutor 4-20ma tensão",
-    transdutorQuatroAVinteMACorrente: "Transdutor 4-20ma corrente",
+    fusivel_de_potencia: "Fusível de Potência (F1)",
+    protecao_circuitos_auxiliares: "Proteção circuitos auxiliares",
+    fusivel_de_potencia_na_coluna_retificadora: "Fusível de Potência na coluna retificadora (FR1/FR2/FR3)",
+    tratamento_da_barra: "Tratamento da Barra",
+    tipo_de_fiacao: "Tipo de Fiação",
+    identificacao_de_cabos: "Identificação de Cabos",
 
-    chaveLigaDesliga: "Chave Liga e Desliga",
-    chaveFlutuacaoECarga: "Chave Flutuação e Carga",
-    chaveCargaProfunda: "Chave Carga Profunda",
-    chaveReposicao: "Chave Reposição",
-    softwareCCSTools: "Software “CCSTools”",
-    comunicacãoSupervisorio: "Comunicação Supervisório",
+    material_do_gabinete: "Material do Gabinete",
+    grau_de_protecao: "Grau de Proteção",
+    tipo_de_pintura: "Tipo de Pintura",
+    cor_externa: "Cor externa",
+    soleira_na_base: "Soleira na base",
+    entrada_e_saida_de_cabos: "Entrada e saída de cabos",
+    exaustao_de_ar_quente: "Exaustão de ar quente",
+    protecao_nr10: "Proteção NR10",
+
+    diodo_de_bloqueio: "Diodo de Bloqueio",
+    disconexao_de_bateria: "Disconexão de Bateria",
+    alarme_sonoro: "Alarme Sonoro",
+    sinalizacao_visual_led: "Sinalização Visual Led",
+    sinalizacao_remota_sete_reles: "Sinalização Remota 7 reles",
+    protecao_contra_surtos_adicional: "Proteção Contra Surtos Adicional",
+    plaqueta_de_identificacao: "Plaqueta de Identificação",
+    sensores_corrente_alternada: "Sensores CA",
+
+    tipo_de_instrumento: "Tipo de Instrumento",
+    instrumento_de_medicao_voltimetro_corrente_continua: "Inst. de medição Voltímetro CC",
+    instrumento_de_medicao_voltimetro_corrente_alternada: "Inst. de medição Voltímetro CA",
+    instrumento_de_medicao_amperimetro_corrente_continua: "Inst. de medição Amperim. CC",
+    instrumento_de_medicao_amperimetro_corrente_alternada: "Inst. de medição Amperim. CA",
+    transdutor_quatro_a_vinte_ma_tensao: "Transdutor 4-20ma tensão",
+    transdutor_quatro_a_vinte_ma_corrente: "Transdutor 4-20ma corrente",
+
+    chave_liga_desliga: "Chave Liga e Desliga",
+    chave_flutuacao_e_carga: "Chave Flutuação e Carga",
+    chave_carga_profunda: "Chave Carga Profunda",
+    chave_reposicao: "Chave Reposição",
+    software_ccs_tools: "Software “CCSTools”",
+    comunicacao_supervisorio: "Comunicação Supervisório",
     sobressalentes: "Sobressalentes",
-    tomadaDeServicoes: "Tomada de Serviços",
-    sistemaDeCalefacao: "Sistema de Calefação",
-    terminalDeAterramento: "Terminal de Aterramento",
-    portaDocumentos: "Porta Documentos",
+    tomada_de_servicos: "Tomada de Serviços",
+    sistema_de_calefacao: "Sistema de Calefação",
+    terminal_de_aterramento: "Terminal de Aterramento",
+    porta_documentos: "Porta Documentos",
 
-    maoDeObraEngenharia: "M. O. -  Engenharia (média)",
-    maoDeObraMecanica: "M. O. -  Mecânica (média)",
-    maoDeObraEletrica: "M. O. -  Elétrica (média)",
-    maoDeObraOperacional: "M. O. -  Operacional (média)",
-    maoDeObraAdministracao: "M. O. -  Administração (média)",
+    mao_de_obra_engenharia: "M. O. -  Engenharia (média)",
+    mao_de_obra_mecanica: "M. O. -  Mecânica (média)",
+    mao_de_obra_eletrica: "M. O. -  Elétrica (média)",
+    mao_de_obra_operacional: "M. O. -  Operacional (média)",
+    mao_de_obra_administracao: "M. O. -  Administração (média)",
 
-    idiomaDaDocumentacao: "Idioma da Documentação",
-    tipoDeDocumentacao: "Tipo de Documentação",
-    ensaiosETestes: "Ensaios e teste",
+    idioma_da_documentacao: "Idioma da Documentação",
+    tipo_de_documentacao: "Tipo de Documentação",
+    ensaios_e_testes: "Ensaios e teste",
 
-    startUp: "Start-up",
-    startUpEstado: "Estado",
-    startUpValor: "Valor",
+    start_up: "Start-up",
+    start_up_estado: "Estado",
+    start_up_valor: "Valor",
     frete: "Frete",
-    freteEstado: "Estado",
-    freteValor: "Valor",
-    comissaoMargemDeVenda: "Margem de venda (%)",
-    comissaoVendedor: "Vendedor (%)",
+    frete_estado: "Estado",
+    frete_valor: "Valor",
+    comissao_margem_de_venda: "Margem de venda (%)",
+    comissao_vendedor: "Vendedor (%)",
     treinamento: "Treinamento",
-    treinamentoEstado: "Estado",
-    treinamentoValor: "Valor",
+    treinamento_estado: "Estado",
+    treinamento_valor: "Valor",
 
-    outrosOpcionais: "Outros opcionais ",
-    outrosOpcionaisValor: "Valor",
-    bateriaUmValor: "Insira o Valor s/IPI (R$)",
+    outros_opcionais: "Outros opcionais ",
+    outros_opcionais_valor: "Valor",
+    valor_bateria_1: "Insira o Valor s/IPI (R$)",
 
-    valorSemImpostos: "Valor sem Impostos",
+    valor_sem_impostos: "Valor sem Impostos",
     irpj: "IRPJ (4,4%)",
     cofins: "COFINS (3%)",
     pis: "PIS (0,65%)",
     csll: "CSLL (1,08%)",
     icms: "ICMS",
     ipi: "IPI",
-    valorComPisCofins: "Valor com PIS/COFINS",
-    valorComIcms: "Valor com ICMS",
-    valorUnitarioComTodosOsImpostos: "Valor Unitário com todos os Impostos",
+    valor_com_pis_cofins: "Valor com PIS/COFINS",
+    valor_com_icms: "Valor com ICMS",
+    valor_unitario_com_todos_os_impostos: "Valor Unitário com todos os Impostos",
+
+    criado_em: "",
+    atualizado_em: ""
 }
 
-export interface ProposalData {
-    proposalNumber: string;
-    customerReference: string;
-    company: string;
-    cnpj: string;
-    requester: string;
-    email: string;
-    phone: string;
-    invoicing: string;
-    invoicingStatus: string;
-    system: string;
-    formPayment: string;
-    notesPaymentCondition: string
-    deliveryTimeAndSchedule: string;
-    shortTextItemFieldOne: string;
-    featuresOfTheFirstBatteryBank: string;
-    shortTextItemFieldTwo: string;
-    featuresOfTheSecondBatteryBank: string;
-    equipmentType: string;
-    nominalVoltage: string;
-    outputCurrent: string;
-    nominalInputVoltage: string;
-    nominalFrequency: string;
-    powerFactor: string;
-    tolerance: string;
-    efficiency: string;
-    batteryType: string;
-    numberOfElements: string;
-    capacity: string;
-    voltageFluctuation: string;
-    voltageLoad: string;
-    voltageDeepDischarge: string;
+export type ProposalData = Omit<Proposal, "id">
 
-    tensaoMaximaConsumidor: string;
-    tensaoMinimaConsumidor: string;
-    quedaNaUDQ: string;
-    numeroDeEstagios: string;
-    tipoRetificador: string;
-    distorcaoHarmonica: string;
-
-    correnteDeEntradaProtecaoGeral: string;
-    tipoDeDisjuntorProtecaoGeral: string;
-    correnteDeRupturaProtecaoGeral: string;
-    contatoAuxiliarProtecaoGeral: string;
-    correnteDeSaidaBateria: string;
-    tipoDisjuntorBateria: string;
-    correnteDeRupturaBateria: string;
-    contatoAuxiliarBateria: string;
-    correnteDeSaidaConsumidor: string;
-    tipoDisjuntoConsumidor: string;
-    correnteDeRupturaConsumidor: string;
-    contatoAuxiliarConsumidor: string;
-    quantidadeDeDisjuntoresConsumidor: string;
-
-    fusivelDePotencia: string;
-    protecaoCircuitosAuxiliares: string;
-    fusivelDePotenciaNaColunaRetificadora: string;
-    tratamentoDaBarra: string;
-    tipoDeFiacao: string;
-    identificacaoDeCabos: string;
-
-    materialDoGabinete: string;
-    grauDeProtecao: string;
-    tipoDePintura: string;
-    corExterna: string;
-    soleiraNaBase: string;
-    entradaESaidaDeCabos: string;
-    exaustaoDeArQuente: string;
-    protecaoNR10: string;
-
-    diodoDeBloqueio: string;
-    disconexaoDeBateria: string;
-    alarmeSonoro: string;
-    sinalizacaoVisualLed: string;
-    sinalizacaoRemotaSeteReles: string;
-    protecaoContraSurtosAdicional: string;
-    plaquetaDeIdentificacao: string;
-    sensoresCorrenteAlternada: string;
-
-    tipoDeInstrumento: string;
-    instDeMedicaoVoltimetroCorrenteContinua: string;
-    instDeMedicaoVoltimetroCorrenteAlternada: string;
-    instDeMedicaoAmperimetroCorrenteContinua: string;
-    instDeMedicaoAmperimetroCorrenteAlternada: string;
-    transdutorQuatroAVinteMATensao: string;
-    transdutorQuatroAVinteMACorrente: string;
-
-    chaveLigaDesliga: string;
-    chaveFlutuacaoECarga: string;
-    chaveCargaProfunda: string;
-    chaveReposicao: string;
-    softwareCCSTools: string;
-    comunicacãoSupervisorio: string;
-    sobressalentes: string;
-    tomadaDeServicoes: string;
-    sistemaDeCalefacao: string;
-    terminalDeAterramento: string;
-    portaDocumentos: string;
-
-    maoDeObraEngenharia: string;
-    maoDeObraMecanica: string;
-    maoDeObraEletrica: string;
-    maoDeObraOperacional: string;
-    maoDeObraAdministracao: string;
-
-    idiomaDaDocumentacao: string;
-    tipoDeDocumentacao: string;
-    ensaiosETestes: string;
-
-    startUp: string;
-    startUpEstado: string;
-    startUpValor: string;
-    frete: string;
-    freteEstado: string;
-    freteValor: string;
-    comissaoMargemDeVenda: string;
-    comissaoVendedor: string;
-    treinamento: string;
-    treinamentoEstado: string;
-    treinamentoValor: string;
-
-    outrosOpcionais: string;
-    outrosOpcionaisValor: string;
-    bateriaUmValor: string;
-
-    valorSemImpostos: string;
-    irpj: string;
-    cofins: string;
-    pis: string;
-    csll: string;
-    icms: string;
-    ipi: string;
-    valorComPisCofins: string;
-    valorComIcms: string;
-    valorUnitarioComTodosOsImpostos: string;
-
-    createdAt: string;
-}
 
 interface ProposalProps {
     id?: number
@@ -285,145 +155,146 @@ interface ProposalProps {
 }
 
 const initialProposal = { 
-    proposalNumber: '',
-    customerReference: '',
-    company: '',
+    numero_da_proposta: '',
+    referencia_do_cliente: '',
+    empresa: '',
     cnpj: '',
-    requester: '',
+    solicitante: '',
     email: '',
-    phone: '',
+    telefone: '',
 
-    invoicing: "",
-    invoicingStatus: "",
-    system: "",
-    formPayment: "",
-    notesPaymentCondition: "",
+    faturamento: "",
+    estado_de_faturamento: "",
+    sistema: "",
+    forma_de_pagamento: "",
+    condicao_de_pagamento: "",
 
-    deliveryTimeAndSchedule: "",
-    shortTextItemFieldOne: "",
-    featuresOfTheFirstBatteryBank: "",
-    shortTextItemFieldTwo: "",
-    featuresOfTheSecondBatteryBank: "",
+    prazo_de_entrega_e_cronograma: "",
+    campo_item_1: "",
+    caracteristicas_do_primeiro_banco_de_baterias: "",
+    campo_item_2: "",
+    caracteristicas_do_segundo_banco_de_baterias: "",
 
-    equipmentType: "",
-    nominalVoltage: "",
-    outputCurrent: "",
-    nominalInputVoltage: "",
-    nominalFrequency: "",
-    powerFactor: "",
-    tolerance: "",
-    efficiency: "",
-    batteryType: "",
-    numberOfElements: "",
-    capacity: "",
-    voltageFluctuation: "",
-    voltageLoad: "",
-    voltageDeepDischarge: "",
+    tipo_de_equipamento: "",
+    tensao_nominal: "",
+    corrente_de_saida: "",
+    tensao_nominal_entrada: "",
+    frequencia_nominal: "",
+    fator_de_potencia: "",
+    tolerancia: "",
+    rendimento: "",
+    tipo_de_bateria: "",
+    numero_de_elementos: "",
+    capacidade: "",
+    voltagem_de_flutuacao: "",
+    voltagem_de_carga: "",
+    voltagem_de_carga_profunda: "",
 
-    tensaoMaximaConsumidor: "",
-    tensaoMinimaConsumidor: "",
-    quedaNaUDQ: "",
-    numeroDeEstagios: "",
-    tipoRetificador: "",
-    distorcaoHarmonica: "",
+    tensao_maxima_consumidor: "",
+    tensao_minima_consumidor: "",
+    queda_na_uqd: "",
+    numero_de_estagios: "",
+    tipo_de_retificador: "",
+    distorcao_harmonica: "",
 
-    correnteDeEntradaProtecaoGeral: "",
-    tipoDeDisjuntorProtecaoGeral: "",
-    correnteDeRupturaProtecaoGeral: "",
-    contatoAuxiliarProtecaoGeral: "",
-    correnteDeSaidaBateria: "",
-    tipoDisjuntorBateria: "",
-    correnteDeRupturaBateria: "",
-    contatoAuxiliarBateria: "",
-    correnteDeSaidaConsumidor: "",
-    tipoDisjuntoConsumidor: "",
-    correnteDeRupturaConsumidor: "",
-    contatoAuxiliarConsumidor: "",
-    quantidadeDeDisjuntoresConsumidor: "",
+    corrente_de_entrada_protecao_geral: "",
+    tipo_de_disjuntor_protecao_geral: "",
+    corrente_de_ruptura_protecao_geral: "",
+    contato_auxiliar_protecao_geral: "",
+    corrente_de_saida_bateria: "",
+    tipo_de_disjuntor_bateria: "",
+    corrente_de_ruptura_bateria: "",
+    contato_auxiliar_bateria: "",
+    corrente_de_saida_consumidor: "",
+    tipo_de_disjuntor_consumidor: "",
+    corrente_de_ruptura_consumidor: "",
+    contato_auxiliar_consumidor: "",
+    quantidade_de_disjuntores_consumidor: "",
 
-    fusivelDePotencia: "",
-    protecaoCircuitosAuxiliares: "",
-    fusivelDePotenciaNaColunaRetificadora: "",
-    tratamentoDaBarra: "",
-    tipoDeFiacao: "",
-    identificacaoDeCabos: "",
+    fusivel_de_potencia: "",
+    protecao_circuitos_auxiliares: "",
+    fusivel_de_potencia_na_coluna_retificadora: "",
+    tratamento_da_barra: "",
+    tipo_de_fiacao: "",
+    identificacao_de_cabos: "",
 
-    materialDoGabinete: "",
-    grauDeProtecao: "",
-    tipoDePintura: "",
-    corExterna: "",
-    soleiraNaBase: "",
-    entradaESaidaDeCabos: "",
-    exaustaoDeArQuente: "",
-    protecaoNR10: "",
+    material_do_gabinete: "",
+    grau_de_protecao: "",
+    tipo_de_pintura: "",
+    cor_externa: "",
+    soleira_na_base: "",
+    entrada_e_saida_de_cabos: "",
+    exaustao_de_ar_quente: "",
+    protecao_nr10: "",
 
-    diodoDeBloqueio: "",
-    disconexaoDeBateria: "",
-    alarmeSonoro: "",
-    sinalizacaoVisualLed: "",
-    sinalizacaoRemotaSeteReles: "",
-    protecaoContraSurtosAdicional: "",
-    plaquetaDeIdentificacao: "",
-    sensoresCorrenteAlternada: "",
+    diodo_de_bloqueio: "",
+    disconexao_de_bateria: "",
+    alarme_sonoro: "",
+    sinalizacao_visual_led: "",
+    sinalizacao_remota_sete_reles: "",
+    protecao_contra_surtos_adicional: "",
+    plaqueta_de_identificacao: "",
+    sensores_corrente_alternada: "",
 
-    tipoDeInstrumento: "",
-    instDeMedicaoVoltimetroCorrenteContinua: "",
-    instDeMedicaoVoltimetroCorrenteAlternada: "",
-    instDeMedicaoAmperimetroCorrenteContinua: "",
-    instDeMedicaoAmperimetroCorrenteAlternada: "",
-    transdutorQuatroAVinteMATensao: "",
-    transdutorQuatroAVinteMACorrente: "",
+    tipo_de_instrumento: "",
+    instrumento_de_medicao_voltimetro_corrente_continua: "",
+    instrumento_de_medicao_voltimetro_corrente_alternada: "",
+    instrumento_de_medicao_amperimetro_corrente_continua: "",
+    instrumento_de_medicao_amperimetro_corrente_alternada: "",
+    transdutor_quatro_a_vinte_ma_tensao: "",
+    transdutor_quatro_a_vinte_ma_corrente: "",
 
-    chaveLigaDesliga: "",
-    chaveFlutuacaoECarga: "",
-    chaveCargaProfunda: "",
-    chaveReposicao: "",
-    softwareCCSTools: "",
-    comunicacãoSupervisorio: "",
+    chave_liga_desliga: "",
+    chave_flutuacao_e_carga: "",
+    chave_carga_profunda: "",
+    chave_reposicao: "",
+    software_ccs_tools: "",
+    comunicacao_supervisorio: "",
     sobressalentes: "",
-    tomadaDeServicoes: "",
-    sistemaDeCalefacao: "",
-    terminalDeAterramento: "",
-    portaDocumentos: "",
+    tomada_de_servicos: "",
+    sistema_de_calefacao: "",
+    terminal_de_aterramento: "",
+    porta_documentos: "",
 
-    maoDeObraEngenharia: "",
-    maoDeObraMecanica: "",
-    maoDeObraEletrica: "",
-    maoDeObraOperacional: "",
-    maoDeObraAdministracao: "",
+    mao_de_obra_engenharia: "",
+    mao_de_obra_mecanica: "",
+    mao_de_obra_eletrica: "",
+    mao_de_obra_operacional: "",
+    mao_de_obra_administracao: "",
 
-    idiomaDaDocumentacao: "",
-    tipoDeDocumentacao: "",
-    ensaiosETestes: "",
+    idioma_da_documentacao: "",
+    tipo_de_documentacao: "",
+    ensaios_e_testes: "",
 
-    startUp: "",
-    startUpEstado: "",
-    startUpValor: "",
+    start_up: "",
+    start_up_estado: "",
+    start_up_valor: "",
     frete: "",
-    freteEstado: "",
-    freteValor: "",
-    comissaoMargemDeVenda: "",
-    comissaoVendedor: "",
+    frete_estado: "",
+    frete_valor: "",
+    comissao_margem_de_venda: "",
+    comissao_vendedor: "",
     treinamento: "",
-    treinamentoEstado: "",
-    treinamentoValor: "",
+    treinamento_estado: "",
+    treinamento_valor: "",
 
-    outrosOpcionais: "",
-    outrosOpcionaisValor: "",
-    bateriaUmValor: "",
+    outros_opcionais: "",
+    outros_opcionais_valor: "",
+    valor_bateria_1: "",
 
-    valorSemImpostos: "",
+    valor_sem_impostos: "",
     irpj: "",
     cofins: "",
     pis: "",
     csll: "",
     icms: "",
     ipi: "",
-    valorComPisCofins: "",
-    valorComIcms: "",
-    valorUnitarioComTodosOsImpostos: "",
-
-    createdAt: ""
+    valor_com_pis_cofins: "",
+    valor_com_icms: "",
+    valor_unitario_com_todos_os_impostos: "",
+    
+    criado_em: "",
+    atualizado_em: ""
 }
 
 export const ProposalContext = createContext<ProposalProps>(null)
@@ -439,8 +310,6 @@ export function ProposalProvider({ children }: PropsWithChildren) {
     function handleId(value: number) {
         setId(value)
     }
-
-    console.log(data)
 
     return (
         <ProposalContext.Provider value={{ id, data, handleData, handleId }} >

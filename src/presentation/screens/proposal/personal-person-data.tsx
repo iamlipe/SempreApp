@@ -7,13 +7,13 @@ import { Button } from "../../shared/button";
 export function ProposalPersonData() {
     const navigate = useNavigate()
     
-    const [proposalNumber, setProposalNumber] = useState('')
-    const [customerReference, setCustomerReference] = useState('')
-    const [company, setCompany] = useState('')
+    const [numeroDaProposta, setNumeroDaProposta] = useState('')
+    const [referenciaDoCliente, setReferenciaDoCliente] = useState('')
+    const [empresa, setEmpresa] = useState('')
     const [cnpj, setCnpj] = useState('')
-    const [requester, setRequester] = useState('')
+    const [solicitante, setSolicitante] = useState('')
     const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
+    const [telefone, setTelefone] = useState('')
     
     const [errors, setErrors] = useState<Partial<Record<keyof ProposalData, string>>>({})
     const [canGo, setCanGo] = useState(false)
@@ -21,23 +21,39 @@ export function ProposalPersonData() {
     const { data, handleData } = useProposal()
     
     const handlePersonalData = () => {
-        handleData({ proposalNumber, customerReference, company, cnpj, requester, email, phone })
+        handleData({ 
+            numero_da_proposta: numeroDaProposta, 
+            referencia_do_cliente: referenciaDoCliente, 
+            empresa, 
+            cnpj, 
+            solicitante, 
+            email, 
+            telefone, 
+        })
         setCanGo(true)
     }
 
     useEffect(() => {
-        setProposalNumber(data.proposalNumber)
-        setCustomerReference(data.customerReference)
-        setCompany(data.company)
+        setNumeroDaProposta(data.numero_da_proposta)
+        setReferenciaDoCliente(data.referencia_do_cliente)
+        setEmpresa(data.empresa)
         setCnpj(data.cnpj)
-        setRequester(data.requester)
+        setSolicitante(data.solicitante)
         setEmail(data.email)
-        setPhone(data.phone)
+        setTelefone(data.telefone)
     }, [])
 
     useEffect(() => {
         if(canGo) {
-            const fields: (keyof ProposalData)[] = ['proposalNumber', 'customerReference', 'company', 'cnpj', 'requester', 'email', 'phone'];
+            const fields: (keyof ProposalData)[] = [
+                'numero_da_proposta', 
+                'referencia_do_cliente', 
+                'empresa', 
+                'cnpj', 
+                'solicitante', 
+                'email', 
+                'telefone'
+            ];
             const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
         
             const allFieldsFilled = fields.every(field => {
@@ -62,13 +78,14 @@ export function ProposalPersonData() {
 
     return (
         <div className="flex flex-col space-y-2">
-            <Input label="Número da Proposta" error={errors.proposalNumber} placeholder="Número da Proposta" type="text" onChange={(e) => setProposalNumber(e.target.value)} value={proposalNumber} />
-            <Input label="Referência do Cliente" error={errors.customerReference}  placeholder="Referência do Cliente" type="text" onChange={(e) => setCustomerReference(e.target.value)} value={customerReference} />
-            <Input label="Empresa" error={errors.company} placeholder="Empresa" type="text" onChange={(e) => setCompany(e.target.value)} value={company} />
+            <Input label="Número da Proposta" error={errors.numero_da_proposta} placeholder="Número da Proposta" type="text" onChange={(e) => setNumeroDaProposta(e.target.value)} value={numeroDaProposta} />
+            <Input label="Referência do Cliente" error={errors.referencia_do_cliente}  placeholder="Referência do Cliente" type="text" onChange={(e) => setReferenciaDoCliente(e.target.value)} value={referenciaDoCliente} />
+            <Input label="Empresa" error={errors.empresa} placeholder="Empresa" type="text" onChange={(e) => setEmpresa(e.target.value)} value={empresa} />
             <Input label="CNPJ" error={errors.cnpj} placeholder="CNPJ" type="text" onChange={(e) => setCnpj(e.target.value)} value={cnpj} />
-            <Input label="Solicitante" error={errors.requester} placeholder="Solicitante" type="text" onChange={(e) => setRequester(e.target.value)} value={requester} />
+            <Input label="Solicitante" error={errors.solicitante} placeholder="Solicitante" type="text" onChange={(e) => setSolicitante(e.target.value)} value={solicitante} />
             <Input label="Email" error={errors.email} placeholder="Email" type="text" onChange={(e) => setEmail(e.target.value)} value={email} />
-            <Input label="Telefone" error={errors.phone} placeholder="Telefone" type="text" onChange={(e) => setPhone(e.target.value)} value={phone} />
+            <Input label="Telefone" error={errors.telefone} placeholder="Telefone" type="text" onChange={(e) => setTelefone(e.target.value)} value={telefone} />
+
 
             <div className="flex flex-col">
                 <Button className="mt-10" variant="default" type="button" onClick={handlePersonalData}>Próximo</Button>

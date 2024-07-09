@@ -1,47 +1,171 @@
 import { ipcMain } from "electron";
 import { dbPath } from "../utils/db-path";
+import { Proposal } from "../models/proposal";
 
 import Database from "better-sqlite3";
 
-export interface UpdateProposalParams {
-    id: number;
-    proposalNumber: string;
-    customerReference: string;
-    company: string;
-    cnpj: string;
-    requester: string;
-    email: string;
-    phone: string;
-    invoicing: string;
-    invoicingStatus: string;
-    system: string;
-    formPayment: string;
-    notesPaymentCondition: string;
-    deliveryTimeAndSchedule: string;
-    shortTextItemFieldOne: string;
-    featuresOfTheFirstBatteryBank: string;
-    shortTextItemFieldTwo: string;
-    featuresOfTheSecondBatteryBank: string;
-    createdAt: string;
-}
+const sql = `
+    UPDATE propostas SET
+        numero_da_proposta = ?, referencia_do_cliente = ?, empresa = ?, cnpj = ?, solicitante = ?, email = ?, telefone = ?, faturamento = ?,
+        estado_de_faturamento = ?, sistema = ?, forma_de_pagamento = ?, condicao_de_pagamento = ?, prazo_de_entrega_e_cronograma = ?,
+        campo_item_1 = ?, caracteristicas_do_primeiro_banco_de_baterias = ?, campo_item_2 = ?, caracteristicas_do_segundo_banco_de_baterias = ?,
+        tipo_de_equipamento = ?, tensao_nominal = ?, corrente_de_saida = ?, tensao_nominal_entrada = ?, frequencia_nominal = ?, fator_de_potencia = ?,
+        tolerancia = ?, rendimento = ?, tipo_de_bateria = ?, numero_de_elementos = ?, capacidade = ?, voltagem_de_flutuacao = ?, voltagem_de_carga = ?,
+        voltagem_de_carga_profunda = ?, tensao_maxima_consumidor = ?, tensao_minima_consumidor = ?, queda_na_uqd = ?, numero_de_estagios = ?,
+        tipo_de_retificador = ?, distorcao_harmonica = ?, corrente_de_entrada_protecao_geral = ?, tipo_de_disjuntor_protecao_geral = ?,
+        corrente_de_ruptura_protecao_geral = ?, contato_auxiliar_protecao_geral = ?, corrente_de_saida_bateria = ?, tipo_de_disjuntor_bateria = ?,
+        corrente_de_ruptura_bateria = ?, contato_auxiliar_bateria = ?, corrente_de_saida_consumidor = ?, tipo_de_disjuntor_consumidor = ?,
+        corrente_de_ruptura_consumidor = ?, contato_auxiliar_consumidor = ?, quantidade_de_disjuntores_consumidor = ?, fusivel_de_potencia = ?,
+        protecao_circuitos_auxiliares = ?, fusivel_de_potencia_na_coluna_retificadora = ?, tratamento_da_barra = ?, tipo_de_fiacao = ?,
+        identificacao_de_cabos = ?, material_do_gabinete = ?, grau_de_protecao = ?, tipo_de_pintura = ?, cor_externa = ?, soleira_na_base = ?,
+        entrada_e_saida_de_cabos = ?, exaustao_de_ar_quente = ?, protecao_nr10 = ?, diodo_de_bloqueio = ?, disconexao_de_bateria = ?, alarme_sonoro = ?,
+        sinalizacao_visual_led = ?, sinalizacao_remota_sete_reles = ?, protecao_contra_surtos_adicional = ?, plaqueta_de_identificacao = ?,
+        sensores_corrente_alternada = ?, tipo_de_instrumento = ?, instrumento_de_medicao_voltimetro_corrente_continua = ?,
+        instrumento_de_medicao_voltimetro_corrente_alternada = ?, instrumento_de_medicao_amperimetro_corrente_continua = ?,
+        instrumento_de_medicao_amperimetro_corrente_alternada = ?, transdutor_quatro_a_vinte_ma_tensao = ?, transdutor_quatro_a_vinte_ma_corrente = ?,
+        chave_liga_desliga = ?, chave_flutuacao_e_carga = ?, chave_carga_profunda = ?, chave_reposicao = ?, software_ccs_tools = ?, comunicacao_supervisorio = ?,
+        sobressalentes = ?, tomada_de_servicos = ?, sistema_de_calefacao = ?, terminal_de_aterramento = ?, porta_documentos = ?, mao_de_obra_engenharia = ?,
+        mao_de_obra_mecanica = ?, mao_de_obra_eletrica = ?, mao_de_obra_operacional = ?, mao_de_obra_administracao = ?, idioma_da_documentacao = ?,
+        tipo_de_documentacao = ?, ensaios_e_testes = ?, start_up = ?, start_up_estado = ?, start_up_valor = ?, frete = ?, frete_estado = ?, frete_valor = ?,
+        comissao_margem_de_venda = ?, comissao_vendedor = ?, treinamento = ?, treinamento_estado = ?, treinamento_valor = ?, outros_opcionais = ?,
+        outros_opcionais_valor = ?, valor_bateria_1 = ?, valor_sem_impostos = ?, irpj = ?, cofins = ?, pis = ?, csll = ?, icms = ?, ipi = ?, valor_com_pis_cofins = ?,
+        valor_com_icms = ?, valor_unitario_com_todos_os_impostos = ?, criado_em = ?, atualizado_em = ?
+    WHERE id = ?;`;
 
-ipcMain.handle('update-proposal', async (_, proposalData: UpdateProposalParams) => {
+ipcMain.handle('update-proposal', async (_, proposalData: Proposal) => {
     try {
+        const dataAtual = new Date().toISOString();
+        const criadoEm = proposalData.criado_em && proposalData.criado_em !== "" ? proposalData.criado_em : dataAtual;
+        const atualizadoEm = dataAtual;
         const db = new Database(dbPath);
-        const { id, proposalNumber, customerReference, company, cnpj, requester, email, phone, invoicing, 
-            invoicingStatus, system, formPayment, notesPaymentCondition, deliveryTimeAndSchedule, 
-            shortTextItemFieldOne, featuresOfTheFirstBatteryBank, shortTextItemFieldTwo, 
-            featuresOfTheSecondBatteryBank, createdAt
-        } = proposalData
-
-        const sql = `UPDATE proposal SET proposalNumber = ?, customerReference = ?, company = ?, cnpj = ?, requester = ?, email = ?, phone = ?, invoicing = ?, invoicingStatus = ?, system = ?, formPayment = ?, notesPaymentCondition = ?, deliveryTimeAndSchedule = ?, shortTextItemFieldOne = ?, featuresOfTheFirstBatteryBank = ?, shortTextItemFieldTwo = ?, featuresOfTheSecondBatteryBank = ?, createdAt = ? WHERE id = ?;`;
         const stmt = db.prepare(sql); 
-        stmt.run(proposalNumber, customerReference, company, cnpj, requester, email, phone, invoicing, 
-            invoicingStatus, system, formPayment, notesPaymentCondition, deliveryTimeAndSchedule, 
-            shortTextItemFieldOne, featuresOfTheFirstBatteryBank, shortTextItemFieldTwo, 
-            featuresOfTheSecondBatteryBank, createdAt, id
+        stmt.run(        
+            proposalData.numero_da_proposta,
+            proposalData.referencia_do_cliente,
+            proposalData.empresa,
+            proposalData.cnpj,
+            proposalData.solicitante,
+            proposalData.email,
+            proposalData.telefone,
+            proposalData.faturamento,
+            proposalData.estado_de_faturamento,
+            proposalData.sistema,
+            proposalData.forma_de_pagamento,
+            proposalData.condicao_de_pagamento,
+            proposalData.prazo_de_entrega_e_cronograma,
+            proposalData.campo_item_1,
+            proposalData.caracteristicas_do_primeiro_banco_de_baterias,
+            proposalData.campo_item_2,
+            proposalData.caracteristicas_do_segundo_banco_de_baterias,
+            proposalData.tipo_de_equipamento,
+            proposalData.tensao_nominal,
+            proposalData.corrente_de_saida,
+            proposalData.tensao_nominal_entrada,
+            proposalData.frequencia_nominal,
+            proposalData.fator_de_potencia,
+            proposalData.tolerancia,
+            proposalData.rendimento,
+            proposalData.tipo_de_bateria,
+            proposalData.numero_de_elementos,
+            proposalData.capacidade,
+            proposalData.voltagem_de_flutuacao,
+            proposalData.voltagem_de_carga,
+            proposalData.voltagem_de_carga_profunda,
+            proposalData.tensao_maxima_consumidor,
+            proposalData.tensao_minima_consumidor,
+            proposalData.queda_na_uqd,
+            proposalData.numero_de_estagios,
+            proposalData.tipo_de_retificador,
+            proposalData.distorcao_harmonica,
+            proposalData.corrente_de_entrada_protecao_geral,
+            proposalData.tipo_de_disjuntor_protecao_geral,
+            proposalData.corrente_de_ruptura_protecao_geral,
+            proposalData.contato_auxiliar_protecao_geral,
+            proposalData.corrente_de_saida_bateria,
+            proposalData.tipo_de_disjuntor_bateria,
+            proposalData.corrente_de_ruptura_bateria,
+            proposalData.contato_auxiliar_bateria,
+            proposalData.corrente_de_saida_consumidor,
+            proposalData.tipo_de_disjuntor_consumidor,
+            proposalData.corrente_de_ruptura_consumidor,
+            proposalData.contato_auxiliar_consumidor,
+            proposalData.quantidade_de_disjuntores_consumidor,
+            proposalData.fusivel_de_potencia,
+            proposalData.protecao_circuitos_auxiliares,
+            proposalData.fusivel_de_potencia_na_coluna_retificadora,
+            proposalData.tratamento_da_barra,
+            proposalData.tipo_de_fiacao,
+            proposalData.identificacao_de_cabos,
+            proposalData.material_do_gabinete,
+            proposalData.grau_de_protecao,
+            proposalData.tipo_de_pintura,
+            proposalData.cor_externa,
+            proposalData.soleira_na_base,
+            proposalData.entrada_e_saida_de_cabos,
+            proposalData.exaustao_de_ar_quente,
+            proposalData.protecao_nr10,
+            proposalData.diodo_de_bloqueio,
+            proposalData.disconexao_de_bateria,
+            proposalData.alarme_sonoro,
+            proposalData.sinalizacao_visual_led,
+            proposalData.sinalizacao_remota_sete_reles,
+            proposalData.protecao_contra_surtos_adicional,
+            proposalData.plaqueta_de_identificacao,
+            proposalData.sensores_corrente_alternada,
+            proposalData.tipo_de_instrumento,
+            proposalData.instrumento_de_medicao_voltimetro_corrente_continua,
+            proposalData.instrumento_de_medicao_voltimetro_corrente_alternada,
+            proposalData.instrumento_de_medicao_amperimetro_corrente_continua,
+            proposalData.instrumento_de_medicao_amperimetro_corrente_alternada,
+            proposalData.transdutor_quatro_a_vinte_ma_tensao,
+            proposalData.transdutor_quatro_a_vinte_ma_corrente,
+            proposalData.chave_liga_desliga,
+            proposalData.chave_flutuacao_e_carga,
+            proposalData.chave_carga_profunda,
+            proposalData.chave_reposicao,
+            proposalData.software_ccs_tools,
+            proposalData.comunicacao_supervisorio,
+            proposalData.sobressalentes,
+            proposalData.tomada_de_servicos,
+            proposalData.sistema_de_calefacao,
+            proposalData.terminal_de_aterramento,
+            proposalData.porta_documentos,
+            proposalData.mao_de_obra_engenharia,
+            proposalData.mao_de_obra_mecanica,
+            proposalData.mao_de_obra_eletrica,
+            proposalData. mao_de_obra_operacional,
+            proposalData.mao_de_obra_administracao,
+            proposalData.idioma_da_documentacao,
+            proposalData.tipo_de_documentacao,
+            proposalData.ensaios_e_testes,
+            proposalData.start_up,
+            proposalData.start_up_estado,
+            proposalData.start_up_valor,
+            proposalData.frete,
+            proposalData.frete_estado,
+            proposalData.frete_valor,
+            proposalData.comissao_margem_de_venda,
+            proposalData.comissao_vendedor,
+            proposalData.treinamento,
+            proposalData.treinamento_estado,
+            proposalData.treinamento_valor,
+            proposalData.outros_opcionais,
+            proposalData.outros_opcionais_valor,
+            proposalData.valor_bateria_1,
+            proposalData.valor_sem_impostos,
+            proposalData.irpj,
+            proposalData.cofins,
+            proposalData.pis,
+            proposalData.csll,
+            proposalData.icms,
+            proposalData.ipi,
+            proposalData.valor_com_pis_cofins,
+            proposalData.valor_com_icms,
+            proposalData.valor_unitario_com_todos_os_impostos,
+            criadoEm,
+            atualizadoEm,
+            proposalData.id
         );
-
         db.close();
         console.log('Proposta atualizada com sucesso.');
         return { success: true, message: 'Proposta atualizada com sucesso.' };

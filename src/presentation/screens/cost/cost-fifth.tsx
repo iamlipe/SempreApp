@@ -23,24 +23,42 @@ export function CostFifth() {
     const { data, handleData } = useProposal()
 
     const onSubmit = async () => {
-        handleData({ materialDoGabinete, grauDeProtecao, tipoDePintura, corExterna, soleiraNaBase, entradaESaidaDeCabos, exaustaoDeArQuente, protecaoNR10 })
+        handleData({ 
+            material_do_gabinete: materialDoGabinete, 
+            grau_de_protecao: grauDeProtecao, 
+            tipo_de_pintura: tipoDePintura, 
+            cor_externa: corExterna, 
+            soleira_na_base: soleiraNaBase, 
+            entrada_e_saida_de_cabos: entradaESaidaDeCabos, 
+            exaustao_de_ar_quente: exaustaoDeArQuente, 
+            protecao_nr10: protecaoNR10 
+        })
         setCanGo(true)
     }
 
     useEffect(() => {
-        setMaterialDoGabinete(data.materialDoGabinete)
-        setGrauDeProtecao(data.grauDeProtecao)
-        setTipoDePintura(data.tipoDePintura)
-        setCorExterna(data.corExterna)
-        setSoleiraNaBase(data.soleiraNaBase)
-        setEntradaESaidaDeCabos(data.entradaESaidaDeCabos)
-        setExaustaoDeArQuente(data.exaustaoDeArQuente)
-        setProtecaoNR10(data.protecaoNR10)
+        setMaterialDoGabinete(data.material_do_gabinete)
+        setGrauDeProtecao(data.grau_de_protecao)
+        setTipoDePintura(data.tipo_de_pintura)
+        setCorExterna(data.cor_externa)
+        setSoleiraNaBase(data.soleira_na_base)
+        setEntradaESaidaDeCabos(data.entrada_e_saida_de_cabos)
+        setExaustaoDeArQuente(data.exaustao_de_ar_quente)
+        setProtecaoNR10(data.protecao_nr10)
     }, [])
 
     useEffect(() => {
         if(canGo) {
-            const fields: (keyof ProposalData)[] = ['materialDoGabinete', 'grauDeProtecao', 'tipoDePintura', 'corExterna', 'soleiraNaBase', 'entradaESaidaDeCabos', 'exaustaoDeArQuente', 'protecaoNR10'];
+            const fields: (keyof ProposalData)[] = [
+                'material_do_gabinete', 
+                'grau_de_protecao', 
+                'tipo_de_pintura', 
+                'cor_externa', 
+                'soleira_na_base', 
+                'entrada_e_saida_de_cabos', 
+                'exaustao_de_ar_quente', 
+                'protecao_nr10'
+            ];
             const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
         
             const allFieldsFilled = fields.every(field => {
@@ -67,7 +85,7 @@ export function CostFifth() {
         <div className="flex flex-col space-y-2">
             <p className="font-semibold text-slate-800 text-sm mb-2">9 - Outras Proteções</p>
 
-            <Select label="Material do Gabinete" error={errors.materialDoGabinete} onChange={(e) => setMaterialDoGabinete(e.target.value)} value={materialDoGabinete}>
+            <Select label="Material do Gabinete" error={errors.material_do_gabinete} onChange={(e) => setMaterialDoGabinete(e.target.value)} value={materialDoGabinete}>
                 <option value="">Selecione...</option> 
                 <option value="PADRÃO" selected={materialDoGabinete === "PADRÃO"}>PADRÃO (USG 14/12)</option> 
                 <option value="ALUMINIO" selected={materialDoGabinete === "ALUMINIO"}>ALUMINIO</option> 
@@ -76,7 +94,7 @@ export function CostFifth() {
                 <option value="OUTROS" selected={materialDoGabinete === "OUTROS"}>OUTROS</option> 
             </Select>  
 
-            <Select label="Grau de Proteção" error={errors.grauDeProtecao} onChange={(e) => setGrauDeProtecao(e.target.value)} value={grauDeProtecao}>
+            <Select label="Grau de Proteção" error={errors.grau_de_protecao} onChange={(e) => setGrauDeProtecao(e.target.value)} value={grauDeProtecao}>
                 <option value="">Selecione...</option> 
                 <option value="IP-21" selected={grauDeProtecao === "IP-21"}>IP-21</option> 
                 <option value="IP-22" selected={grauDeProtecao === "IP-22"}>IP-22</option> 
@@ -96,16 +114,16 @@ export function CostFifth() {
                 <option value="OUTROS" selected={grauDeProtecao === "OUTROS"}>OUTROS</option> 
             </Select>
 
-            <Select label="Tipo de Pintura" error={errors.tipoDePintura} onChange={(e) => setTipoDePintura(e.target.value)} value={tipoDePintura}>
+            <Select label="Tipo de Pintura" error={errors.tipo_de_pintura} onChange={(e) => setTipoDePintura(e.target.value)} value={tipoDePintura}>
                 <option value="">Selecione...</option> 
-                <option value="EPOXI 80 MICRAS" selected={materialDoGabinete === "EPOXI 80 MICRAS"}>EPOXI 80 MICRAS (PADRÃO)</option> 
-                <option value="EPOXI 190 MICRAS" selected={materialDoGabinete === "EPOXI 190 MICRAS"}>EPOXI 190 MICRAS</option> 
-                <option value="FOSFATIZADA" selected={materialDoGabinete === "FOSFATIZADA"}>FOSFATIZADA</option> 
-                <option value="N2841 PETROBRAS" selected={materialDoGabinete === "N2841 PETROBRAS"}>N2841 PETROBRAS</option> 
-                <option value="ESPECIAL" selected={materialDoGabinete === "ESPECIAL"}>ESPECIAL</option> 
+                <option value="EPOXI 80 MICRAS" selected={tipoDePintura === "EPOXI 80 MICRAS"}>EPOXI 80 MICRAS (PADRÃO)</option> 
+                <option value="EPOXI 190 MICRAS" selected={tipoDePintura === "EPOXI 190 MICRAS"}>EPOXI 190 MICRAS</option> 
+                <option value="FOSFATIZADA" selected={tipoDePintura === "FOSFATIZADA"}>FOSFATIZADA</option> 
+                <option value="N2841 PETROBRAS" selected={tipoDePintura === "N2841 PETROBRAS"}>N2841 PETROBRAS</option> 
+                <option value="ESPECIAL" selected={tipoDePintura === "ESPECIAL"}>ESPECIAL</option> 
             </Select>         
 
-            <Select label="Cor externa" error={errors.corExterna} onChange={(e) => setCorExterna(e.target.value)} value={corExterna}>
+            <Select label="Cor externa" error={errors.cor_externa} onChange={(e) => setCorExterna(e.target.value)} value={corExterna}>
                 <option value="">Selecione...</option> 
                 <option value="CINZA RAL 7032" selected={corExterna === "CINZA RAL 7032"}>CINZA RAL 7032</option> 
                 <option value="CINZA RAL 7035" selected={corExterna === "CINZA RAL 7035"}>CINZA RAL 7035</option> 
@@ -122,29 +140,29 @@ export function CostFifth() {
                 ]}
                 value={soleiraNaBase}
                 onChange={(e) => setSoleiraNaBase(e)}
-                error={errors.soleiraNaBase}
+                error={errors.soleira_na_base}
             />
             
-            <Select label="Entrada e saída de cabos" error={errors.entradaESaidaDeCabos} onChange={(e) => setEntradaESaidaDeCabos(e.target.value)} value={entradaESaidaDeCabos}>
+            <Select label="Entrada e saída de cabos" error={errors.entrada_e_saida_de_cabos} onChange={(e) => setEntradaESaidaDeCabos(e.target.value)} value={entradaESaidaDeCabos}>
                 <option value="">Selecione...</option> 
-                <option value="ENTRADA E SAÍDA DE TERMINAIS" selected={corExterna === "ENTRADA E SAÍDA DE TERMINAIS"}>ENTRADA E SAÍDA DE TERMINAIS</option> 
-                <option value="SUPERIOR" selected={corExterna === "SUPERIOR"}>SUPERIOR</option> 
-                <option value="INFERIOR (PADRÃO)" selected={corExterna === "INFERIOR (PADRÃO)"}>INFERIOR (PADRÃO)</option> 
-                <option value="SUPERIOR COM FECHO FENOLITE" selected={corExterna === "SUPERIOR COM FECHO FENOLITE"}>SUPERIOR COM FECHO FENOLITE</option> 
-                <option value="INFERIOR COM FECHO FENOLITE" selected={corExterna === "INFERIOR COM FECHO FENOLITE"}>INFERIOR COM FECHO FENOLITE</option> 
+                <option value="ENTRADA E SAÍDA DE TERMINAIS" selected={entradaESaidaDeCabos === "ENTRADA E SAÍDA DE TERMINAIS"}>ENTRADA E SAÍDA DE TERMINAIS</option> 
+                <option value="SUPERIOR" selected={entradaESaidaDeCabos === "SUPERIOR"}>SUPERIOR</option> 
+                <option value="INFERIOR (PADRÃO)" selected={entradaESaidaDeCabos === "INFERIOR (PADRÃO)"}>INFERIOR (PADRÃO)</option> 
+                <option value="SUPERIOR COM FECHO FENOLITE" selected={entradaESaidaDeCabos === "SUPERIOR COM FECHO FENOLITE"}>SUPERIOR COM FECHO FENOLITE</option> 
+                <option value="INFERIOR COM FECHO FENOLITE" selected={entradaESaidaDeCabos === "INFERIOR COM FECHO FENOLITE"}>INFERIOR COM FECHO FENOLITE</option> 
             </Select>
 
-            <Select label="Exaustão de ar quente" error={errors.exaustaoDeArQuente} onChange={(e) => setExaustaoDeArQuente(e.target.value)} value={exaustaoDeArQuente}>
+            <Select label="Exaustão de ar quente" error={errors.exaustao_de_ar_quente} onChange={(e) => setExaustaoDeArQuente(e.target.value)} value={exaustaoDeArQuente}>
                 <option value="">Selecione...</option> 
-                <option value="NÃO" selected={corExterna === "NÃO"}>NÃO (PADRÃO)</option> 
-                <option value="OBRIGATÓRIO DEVIDO A POTÊNCIA" selected={corExterna === "OBRIGATÓRIO DEVIDO A POTÊNCIA"}>OBRIGATÓRIO DEVIDO A POTÊNCIA</option> 
-                <option value="CONFORME ET" selected={corExterna === "CONFORME ET"}>CONFORME ET</option> 
+                <option value="NÃO" selected={exaustaoDeArQuente === "NÃO"}>NÃO (PADRÃO)</option> 
+                <option value="OBRIGATÓRIO DEVIDO A POTÊNCIA" selected={exaustaoDeArQuente === "OBRIGATÓRIO DEVIDO A POTÊNCIA"}>OBRIGATÓRIO DEVIDO A POTÊNCIA</option> 
+                <option value="CONFORME ET" selected={exaustaoDeArQuente === "CONFORME ET"}>CONFORME ET</option> 
             </Select>  
 
-            <Select label="Proteção NR10" error={errors.protecaoNR10} onChange={(e) => setProtecaoNR10(e.target.value)} value={protecaoNR10}>
+            <Select label="Proteção NR10" error={errors.protecao_nr10} onChange={(e) => setProtecaoNR10(e.target.value)} value={protecaoNR10}>
                 <option value="">Selecione...</option> 
-                <option value="PROTEÇÃO EM POLICARBONATO (PADRÃO)" selected={corExterna === "PROTEÇÃO EM POLICARBONATO (PADRÃO)"}>PROTEÇÃO EM POLICARBONATO (PADRÃO)</option> 
-                <option value="PROTEÇÃO C/ CONTRA PORTA (METAL)" selected={corExterna === "PROTEÇÃO C/ CONTRA PORTA (METAL)"}>PROTEÇÃO C/ CONTRA PORTA (METAL)</option> 
+                <option value="PROTEÇÃO EM POLICARBONATO (PADRÃO)" selected={protecaoNR10 === "PROTEÇÃO EM POLICARBONATO (PADRÃO)"}>PROTEÇÃO EM POLICARBONATO (PADRÃO)</option> 
+                <option value="PROTEÇÃO C/ CONTRA PORTA (METAL)" selected={protecaoNR10 === "PROTEÇÃO C/ CONTRA PORTA (METAL)"}>PROTEÇÃO C/ CONTRA PORTA (METAL)</option> 
             </Select>  
 
             <div className="flex flex-col">

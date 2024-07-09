@@ -4,7 +4,7 @@ import { ProposalData, fieldLabels, useProposal } from "../../contexts/proposal"
 import { Button } from "../../shared/button";
 import { Select } from "../../shared/select";
 import { Radio } from "../../shared/radio";
-
+import { Modal } from "../../shared/modal";
 
 export function CostEight() {
     const navigate = useNavigate()
@@ -21,50 +21,70 @@ export function CostEight() {
     const [terminalDeAterramento, setTerminalDeAterramento] = useState('')
     const [portaDocumentos, setPortaDocumentos] = useState('')
 
-    const [openInputChaveFlutuacaoECarga, setOpenInputChaveFlutuacaoECarga] = useState(false)
-    const [openInputChaveCargaProfunda, setOpenInputChaveCargaProfunda] = useState(false)
-    const [openInputComunicacãoSupervisorio, setOpenInputComunicacãoSupervisorio] = useState(false)
-    const [openInputSobressalentes, setOpenInputSobressalentes] = useState(false)
-
     const [errors, setErrors] = useState<Partial<Record<keyof ProposalData, string>>>({})
     const [canGo, setCanGo] = useState(false)
 
     const { data, handleData } = useProposal()
 
     const onSubmit = async () => {
-        handleData({ chaveLigaDesliga, chaveFlutuacaoECarga, chaveCargaProfunda, chaveReposicao, softwareCCSTools, comunicacãoSupervisorio, sobressalentes, tomadaDeServicoes, sistemaDeCalefacao, terminalDeAterramento, portaDocumentos })
+        handleData({
+            chave_liga_desliga: chaveLigaDesliga,
+            chave_flutuacao_e_carga: chaveFlutuacaoECarga,
+            chave_carga_profunda: chaveCargaProfunda,
+            chave_reposicao: chaveReposicao,
+            software_ccs_tools: softwareCCSTools,
+            comunicacao_supervisorio: comunicacãoSupervisorio,
+            sobressalentes,
+            tomada_de_servicos: tomadaDeServicoes,
+            sistema_de_calefacao: sistemaDeCalefacao,
+            terminal_de_aterramento: terminalDeAterramento,
+            porta_documentos: portaDocumentos
+        })
+
         setCanGo(true)
     }
 
     useEffect(() => {
-        setChaveLigaDesliga(data.chaveLigaDesliga)
-        setChaveFlutuacaoECarga(data.chaveFlutuacaoECarga)
-        setChaveCargaProfunda(data.chaveCargaProfunda)
-        setChaveReposicao(data.chaveReposicao)
-        setSoftwareCCSTools(data.softwareCCSTools)
-        setComunicacãoSupervisorio(data.comunicacãoSupervisorio)
+        setChaveLigaDesliga(data.chave_liga_desliga)
+        setChaveFlutuacaoECarga(data.chave_flutuacao_e_carga)
+        setChaveCargaProfunda(data.chave_carga_profunda)
+        setChaveReposicao(data.chave_reposicao)
+        setSoftwareCCSTools(data.software_ccs_tools)
+        setComunicacãoSupervisorio(data.comunicacao_supervisorio)
         setSobressalentes(data.sobressalentes)
-        setTomadaDeServicoes(data.tomadaDeServicoes)
-        setSistemaDeCalefacao(data.sistemaDeCalefacao)
-        setTerminalDeAterramento(data.terminalDeAterramento)
-        setPortaDocumentos(data.portaDocumentos)
+        setTomadaDeServicoes(data.tomada_de_servicos)
+        setSistemaDeCalefacao(data.sistema_de_calefacao)
+        setTerminalDeAterramento(data.terminal_de_aterramento)
+        setPortaDocumentos(data.porta_documentos)
     }, [])
 
     useEffect(() => {
-        if(canGo) {
-            const fields: (keyof ProposalData)[] = ['chaveLigaDesliga', 'chaveFlutuacaoECarga', 'chaveCargaProfunda', 'chaveReposicao', 'softwareCCSTools', 'comunicacãoSupervisorio', 'sobressalentes', 'tomadaDeServicoes', 'sistemaDeCalefacao', 'terminalDeAterramento', 'portaDocumentos'];
+        if (canGo) {
+            const fields: (keyof ProposalData)[] = [
+                'chave_liga_desliga',
+                'chave_flutuacao_e_carga',
+                'chave_carga_profunda',
+                'chave_reposicao',
+                'software_ccs_tools',
+                'comunicacao_supervisorio',
+                'sobressalentes',
+                'tomada_de_servicos',
+                'sistema_de_calefacao',
+                'terminal_de_aterramento',
+                'porta_documentos'
+            ];
             const errorsResponse: Partial<Record<keyof ProposalData, string>> = {};
-        
+
             const allFieldsFilled = fields.every(field => {
                 const isFilled = data[field] && data[field] !== '';
-    
+
                 if (!isFilled) {
                     errorsResponse[field] = `Preencha o Campo ${fieldLabels[field]}`;
                 }
-    
+
                 return isFilled;
             });
-        
+
             if (allFieldsFilled) {
                 navigate('/cost/ninth');
                 setCanGo(false)
@@ -87,7 +107,7 @@ export function CostEight() {
                 ]}
                 value={chaveLigaDesliga}
                 onChange={(e) => setChaveLigaDesliga(e)}
-                error={errors.chaveLigaDesliga}
+                error={errors.chave_liga_desliga}
             />
 
             <Radio
@@ -96,22 +116,23 @@ export function CostEight() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputChaveFlutuacaoECarga ? 'Sim' : chaveFlutuacaoECarga}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputChaveFlutuacaoECarga(true);
-                } else {
-                    setOpenInputChaveFlutuacaoECarga(false);
-                    setChaveCargaProfunda(e)
-                } } }
-                error={ openInputChaveFlutuacaoECarga ? "" : errors.chaveFlutuacaoECarga}
+                value={chaveFlutuacaoECarga === "Não" ? 'Não' : chaveFlutuacaoECarga !== "" ? "Sim" : ""}
+                onChange={(e) => {
+                    if (e === "Não") {
+                        setChaveFlutuacaoECarga(e)
+                    } else {
+                        setChaveFlutuacaoECarga("")
+                    }
+                }}
+                error={chaveFlutuacaoECarga === "Não" ? "" : errors.chave_flutuacao_e_carga}
             />
 
-            { openInputChaveFlutuacaoECarga ?          
-                <Select error={errors.chaveFlutuacaoECarga} onChange={(e) => setChaveFlutuacaoECarga(e.target.value)} value={chaveFlutuacaoECarga}>
+            {chaveFlutuacaoECarga !== "Não" ?
+                <Select error={errors.chave_flutuacao_e_carga} onChange={(e) => setChaveFlutuacaoECarga(e.target.value)} value={chaveFlutuacaoECarga}>
                     <option value="">Selecione...</option>
                     <option value="CHAVE ROTATIVA" selected={chaveFlutuacaoECarga === "CHAVE ROTATIVA"}>CHAVE ROTATIVA</option>
-                </Select>   
-            : null }
+                </Select>
+            : null}
 
             <Radio
                 label="Chave Carga Profunda"
@@ -119,22 +140,23 @@ export function CostEight() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputChaveCargaProfunda ? 'Sim' : chaveCargaProfunda}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputChaveCargaProfunda(true);
-                } else {
-                    setOpenInputChaveCargaProfunda(false);
-                    setChaveCargaProfunda(e)
-                } } }
-                error={ openInputChaveCargaProfunda ? "" : errors.chaveCargaProfunda}
+                value={chaveCargaProfunda === "Não" ? 'Não' : chaveCargaProfunda !== "" ? "Sim" : ""}
+                onChange={(e) => {
+                    if (e === "Não") {
+                        setChaveCargaProfunda(e)
+                    } else {
+                        setChaveCargaProfunda("")
+                    }
+                }}
+                error={chaveCargaProfunda === "Não" ?"" : errors.chave_carga_profunda}
             />
 
-            { openInputChaveCargaProfunda ?          
-                <Select error={errors.chaveCargaProfunda} onChange={(e) => setChaveCargaProfunda(e.target.value)} value={chaveCargaProfunda}>
+            {chaveCargaProfunda !== "Não" ?
+                <Select error={errors.chave_carga_profunda} onChange={(e) => setChaveCargaProfunda(e.target.value)} value={chaveCargaProfunda}>
                     <option value="">Selecione...</option>
                     <option value="CHAVE ROTATIVA" selected={chaveCargaProfunda === "CHAVE ROTATIVA"}>CHAVE ROTATIVA</option>
-                </Select>   
-            : null }
+                </Select>
+                : null}
 
             <Radio
                 label="Chave Reposição"
@@ -144,7 +166,7 @@ export function CostEight() {
                 ]}
                 value={chaveReposicao}
                 onChange={(e) => setChaveReposicao(e)}
-                error={errors.chaveReposicao}
+                error={errors.chave_reposicao}
             />
 
             <div className="flex flex-col">
@@ -159,7 +181,7 @@ export function CostEight() {
                 ]}
                 value={softwareCCSTools}
                 onChange={(e) => setSoftwareCCSTools(e)}
-                error={errors.softwareCCSTools}
+                error={errors.software_ccs_tools}
             />
 
             <Radio
@@ -168,18 +190,19 @@ export function CostEight() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputComunicacãoSupervisorio ? 'Sim' : comunicacãoSupervisorio}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputComunicacãoSupervisorio(true);
-                } else {
-                    setOpenInputComunicacãoSupervisorio(false);
-                    setComunicacãoSupervisorio(e)
-                } } }
-                error={ openInputComunicacãoSupervisorio ? "" : errors.comunicacãoSupervisorio}
+                value={comunicacãoSupervisorio === "Não" ? 'Não' : comunicacãoSupervisorio !== "" ? "Sim" : ""}
+                onChange={(e) => {
+                    if (e === "Não") {
+                        setComunicacãoSupervisorio(e)
+                    } else {
+                        setComunicacãoSupervisorio("")
+                    }
+                }}
+                error={comunicacãoSupervisorio === "Não" ? "" : errors.comunicacao_supervisorio}
             />
 
-            { openInputComunicacãoSupervisorio ?          
-                <Select error={errors.comunicacãoSupervisorio} onChange={(e) => setComunicacãoSupervisorio(e.target.value)} value={comunicacãoSupervisorio}>
+            {comunicacãoSupervisorio !== "Não" ?
+                <Select error={errors.comunicacao_supervisorio} onChange={(e) => setComunicacãoSupervisorio(e.target.value)} value={comunicacãoSupervisorio}>
                     <option value="">Selecione...</option>
                     <option value="MOD-BUS RS232" selected={comunicacãoSupervisorio === "MOD-BUS RS232"}>MOD-BUS RS232 (PADRÃO)</option>
                     <option value="MOD-BUS RS485" selected={comunicacãoSupervisorio === "MOD-BUS RS485"}>MOD-BUS RS485</option>
@@ -187,8 +210,8 @@ export function CostEight() {
                     <option value="PROFIBUS" selected={comunicacãoSupervisorio === "PROFIBUS"}>PROFIBUS</option>
                     <option value="SNMP" selected={comunicacãoSupervisorio === "SNMP"}>SNMP</option>
                     <option value="DNP3" selected={comunicacãoSupervisorio === "DNP3"}>DNP3</option>
-                </Select>   
-            : null }
+                </Select>
+                : null}
 
             <Radio
                 label="Sobressalentes"
@@ -196,26 +219,35 @@ export function CostEight() {
                     { value: 'Sim', label: 'Sim' },
                     { value: 'Não', label: 'Não' },
                 ]}
-                value={ openInputSobressalentes ? 'Sim' : sobressalentes}
-                onChange={(e) => { if(e === "Sim") {
-                    setOpenInputSobressalentes(true);
-                } else {
-                    setOpenInputSobressalentes(false);
-                    setSobressalentes(e)
-                } } }
-                error={ openInputSobressalentes ? "" : errors.sobressalentes}
+                value={sobressalentes === "Não" ? 'Não' : sobressalentes !== "" ? "Sim" : ""}
+                onChange={(e) => {
+                    if (e === "Não") {
+                        setSobressalentes(e)
+                    } else {
+                        setSobressalentes("")
+                    }
+                }}
+                error={sobressalentes === "Não" ? "" : errors.sobressalentes}
             />
 
-            { openInputSobressalentes ?          
-                <Select error={errors.sobressalentes} onChange={(e) => setSobressalentes(e.target.value)} value={sobressalentes}>
-                    <option value="">Selecione...</option>
-                    <option value="NÃO" selected={sobressalentes === "NÃO"}>NÃO (PADRÃO)</option>
-                    <option value="SOBRESSALENTES PARA 1 ANO" selected={sobressalentes === "SOBRESSALENTES PARA 1 ANO"}>SOBRESSALENTES PARA 1 ANO</option>
-                    <option value="SOBRESSALENTES PARA 2 ANOS" selected={sobressalentes === "SOBRESSALENTES PARA 2 ANOS"}>SOBRESSALENTES PARA 2 ANOS</option>
-                    <option value="SOBRESSALENTES PARA 5 ANOS" selected={sobressalentes === "SOBRESSALENTES PARA 5 ANOS"}>SOBRESSALENTES PARA 5 ANOS</option>
-                    <option value="SOBRESSALENTES PARRA 10 ANOS" selected={sobressalentes === "SOBRESSALENTES PARRA 10 ANOS"}>SOBRESSALENTES PARRA 10 ANOS</option>
-                </Select>   
-            : null }
+            {sobressalentes !== "Não" ?
+                <div className="flex space-x-2">
+                    <div className="flex-1">
+                        <Select error={errors.sobressalentes} onChange={(e) => setSobressalentes(e.target.value)} value={sobressalentes}>
+                            <option value="">Selecione...</option>
+                            <option value="NÃO" selected={sobressalentes === "NÃO"}>NÃO (PADRÃO)</option>
+                            <option value="SOBRESSALENTES PARA 1 ANO" selected={sobressalentes === "SOBRESSALENTES PARA 1 ANO"}>SOBRESSALENTES PARA 1 ANO</option>
+                            <option value="SOBRESSALENTES PARA 2 ANOS" selected={sobressalentes === "SOBRESSALENTES PARA 2 ANOS"}>SOBRESSALENTES PARA 2 ANOS</option>
+                            <option value="SOBRESSALENTES PARA 5 ANOS" selected={sobressalentes === "SOBRESSALENTES PARA 5 ANOS"}>SOBRESSALENTES PARA 5 ANOS</option>
+                            <option value="SOBRESSALENTES PARRA 10 ANOS" selected={sobressalentes === "SOBRESSALENTES PARRA 10 ANOS"}>SOBRESSALENTES PARRA 10 ANOS</option>
+                        </Select>
+                    </div>
+
+                    <Modal>
+                        <img src="https://i.ibb.co/1qYv1Tp/attachment.png" />
+                    </Modal>
+                </div>
+            : null}
 
             <div className="flex flex-col">
                 <p className="font-semibold text-slate-800 text-sm mt-6 mb-2">14 - Outros Opcionais</p>
@@ -230,7 +262,7 @@ export function CostEight() {
                 ]}
                 value={tomadaDeServicoes}
                 onChange={(e) => setTomadaDeServicoes(e)}
-                error={errors.tomadaDeServicoes}
+                error={errors.tomada_de_servicos}
             />
 
             <Radio
@@ -241,7 +273,7 @@ export function CostEight() {
                 ]}
                 value={sistemaDeCalefacao}
                 onChange={(e) => setSistemaDeCalefacao(e)}
-                error={errors.sistemaDeCalefacao}
+                error={errors.sistema_de_calefacao}
             />
 
             <Radio
@@ -252,7 +284,7 @@ export function CostEight() {
                 ]}
                 value={terminalDeAterramento}
                 onChange={(e) => setTerminalDeAterramento(e)}
-                error={errors.terminalDeAterramento}
+                error={errors.terminal_de_aterramento}
             />
 
             <Radio
@@ -263,7 +295,7 @@ export function CostEight() {
                 ]}
                 value={portaDocumentos}
                 onChange={(e) => setPortaDocumentos(e)}
-                error={errors.portaDocumentos}
+                error={errors.porta_documentos}
             />
 
             <div className="flex flex-col">

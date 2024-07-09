@@ -6,7 +6,7 @@ import { dbPath } from "../utils/db-path";
 ipcMain.handle('fetch-proposal', async (_, id) => {
     try {
         const db = new Database(dbPath);
-        const row = db.prepare('SELECT * FROM proposal WHERE id = ?').get(id);
+        const row = db.prepare('SELECT * FROM propostas WHERE id = ?').get(id);
         db.close();
 
         if (row) {
