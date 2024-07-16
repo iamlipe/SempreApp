@@ -6,7 +6,9 @@ import Database from "better-sqlite3";
 ipcMain.handle('create-table-proposal', async () => {
     try {
         const db = new Database(dbPath);
+        const drop = "DROP TABLE IF EXISTS propostas"
 
+        db.prepare(drop).run()
 
         const sql = `CREATE TABLE IF NOT EXISTS propostas (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -56,7 +58,7 @@ ipcMain.handle('create-table-proposal', async () => {
             corrente_de_ruptura_bateria TEXT,
             contato_auxiliar_bateria TEXT,
             corrente_de_saida_consumidor TEXT,
-            tipo_de_disjunto_consumidor TEXT,
+            tipo_de_disjuntor_consumidor TEXT,
             corrente_de_ruptura_consumidor TEXT,
             contato_auxiliar_consumidor TEXT,
             quantidade_de_disjuntores_consumidor TEXT,
@@ -96,7 +98,7 @@ ipcMain.handle('create-table-proposal', async () => {
             software_ccs_tools TEXT,
             comunicacao_supervisorio TEXT,
             sobressalentes TEXT,
-            tomada_de_servicoes TEXT,
+            tomada_de_servicos TEXT,
             sistema_de_calefacao TEXT,
             terminal_de_aterramento TEXT,
             porta_documentos TEXT,
